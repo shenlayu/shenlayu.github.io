@@ -123,7 +123,7 @@
 <h4 id="1-2-6-贝叶斯曲线拟合"><a href="#1-2-6-贝叶斯曲线拟合" class="headerlink" title="1.2.6 贝叶斯曲线拟合"></a>1.2.6 贝叶斯曲线拟合</h4><p>later</p>
 <h3 id="1-5-决策论"><a href="#1-5-决策论" class="headerlink" title="1.5 决策论"></a>1.5 决策论</h3><p>决策论可以看作概率论的下一步。当概率论给出不确定性后，我们需要一套理论来根据不确定性选出最优的决定。</p>
 <p>记 $\bm{x}$ 为我们遇到的情形, $\mathcal{C}<em>k$ 为我们可以做出的第 $k$ 个决策类。那么<br>$$<br>p(\mathcal{C}</em>{k}|\bm{x}) &#x3D; \frac{p(\bm{x}|\mathcal{C}_k)p(\mathcal{C}_k)}{p(\bm{x})}<br>$$<br>那么如果我们的⽬标是最⼩化把 $x$ 分到错误类别中的可能性，那么我们要选择有最⼤后验概率的类别。</p>
-<h4 id="1-5-1-最⼩化错误分类率"><a href="#1-5-1-最⼩化错误分类率" class="headerlink" title="1.5.1 最⼩化错误分类率"></a>1.5.1 最⼩化错误分类率</h4><p>我们需要给每一个决策类别划分一个决策区域 $\mathcal{R}_k$. 考虑两个决策类的情形，那么我们犯错误的概率为<br>$$<br>\begin{equation}<br>\begin{aligned}<br>p(\text{mistake}) &amp;&#x3D; p(\bm{x}\in \mathcal{R}_1,\mathcal{C}_2) + p(\bm{x}\in \mathcal{R}_2,\mathcal{C}<em>1) \notag \<br>&amp;&#x3D; \int</em>{\mathcal{R}_1}p(\bm{x},\mathcal{C}<em>2)d{\bm{x}} + \int</em>{\mathcal{R}_2}p(\bm{x},\mathcal{C}_1)d{\bm{x}}<br>\end{aligned}<br>\end{equation}<br>$$</p>
+<h4 id="1-5-1-最⼩化错误分类率"><a href="#1-5-1-最⼩化错误分类率" class="headerlink" title="1.5.1 最⼩化错误分类率"></a>1.5.1 最⼩化错误分类率</h4><p>我们需要给每一个决策类别划分一个决策区域 $\mathcal{R}_k$. 考虑两个决策类的情形，那么我们犯错误的概率为<br>$$<br>\begin{equation}<br>\begin{aligned}<br>p(\text{mistake}) &amp;&#x3D; p(\bm{x}\in \mathcal{R}_1,\mathcal{C}_2) + p(\bm{x}\in \mathcal{R}_2,\mathcal{C}<em>1) \notag \<br>&amp;&#x3D; \int</em>{\mathcal{R}_1}p(\bm{x},\mathcal{C}<em>2)d{\bm{x}} + \int</em>{\mathcal{R}_2}p(\bm{x},\mathcal{C}_1)d{\bm{x}}<br>\end{aligned}<br>\end{equation}<br>$$<br>那么显然，为了使 $p(\text{mistake})$ 尽量小，我们要将 $\bm{x} 划分到 $ $p(\bm{x}|\mathcal{C}_k)$ 这一后验概率尽量大的类别。</p>
 
       
     </div>
@@ -221,5 +221,20 @@
 
 
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
