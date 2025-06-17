@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html>
+<!-- MathJax support -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    }
+  };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 <head>
   <meta charset="utf-8">
   
   
   <title>PRML_1 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="1. 绪论1.2 概率论概率的加法公式$$p(X) &#x3D; \sum_{Y} (X,Y)$$ 概率的乘法公式$$p(X,Y) &#x3D; p(Y|X)p(X)$$ 贝叶斯公式$$p(Y|X) &#x3D; \frac{p(X|Y)p(Y)}{p(X)} &#x3D; \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)}$$ 1.2.1 概率密度考虑 $x &amp;#x3D">
+  <meta name="description" content="1. 绪论 1.2 概率论 概率的加法公式 p(X) &#x3D; ∑Y(X, Y) 概率的乘法公式 p(X, Y) &#x3D; p(Y|X)p(X) 贝叶斯公式 $$ p(Y|X) &#x3D; \frac{p(X|Y)p(Y)}{p(X)} &#x3D; \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)} $$ 1.2.1 概率密度 考虑 x &#x3D; g(y), 那么 px(x)δx ≃ py(y)δy. 从">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PRML_1">
 <meta property="og:url" content="http://example.com/2025/05/11/PRML-1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 绪论1.2 概率论概率的加法公式$$p(X) &#x3D; \sum_{Y} (X,Y)$$ 概率的乘法公式$$p(X,Y) &#x3D; p(Y|X)p(X)$$ 贝叶斯公式$$p(Y|X) &#x3D; \frac{p(X|Y)p(Y)}{p(X)} &#x3D; \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)}$$ 1.2.1 概率密度考虑 $x &amp;#x3D">
+<meta property="og:description" content="1. 绪论 1.2 概率论 概率的加法公式 p(X) &#x3D; ∑Y(X, Y) 概率的乘法公式 p(X, Y) &#x3D; p(Y|X)p(X) 贝叶斯公式 $$ p(Y|X) &#x3D; \frac{p(X|Y)p(Y)}{p(X)} &#x3D; \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)} $$ 1.2.1 概率密度 考虑 x &#x3D; g(y), 那么 px(x)δx ≃ py(y)δy. 从">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/PRML-1_src/1.png">
+<meta property="og:image" content="http://example.com/2025/05/11/PRML-1/PRML-1_src/1.png">
+<meta property="og:image" content="http://example.com/2025/05/11/PRML-1/PRML-1_src/2.png">
 <meta property="article:published_time" content="2025-05-11T03:17:02.000Z">
-<meta property="article:modified_time" content="2025-05-12T14:20:08.074Z">
+<meta property="article:modified_time" content="2025-05-13T15:47:43.153Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/PRML-1_src/1.png">
+<meta name="twitter:image" content="http://example.com/2025/05/11/PRML-1/PRML-1_src/1.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -97,42 +112,404 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1. 绪论"></a>1. 绪论</h2><h3 id="1-2-概率论"><a href="#1-2-概率论" class="headerlink" title="1.2 概率论"></a>1.2 概率论</h3><p>概率的加法公式<br>$$<br>p(X) &#x3D; \sum_{Y} (X,Y)<br>$$</p>
-<p>概率的乘法公式<br>$$<br>p(X,Y) &#x3D; p(Y|X)p(X)<br>$$</p>
-<p>贝叶斯公式<br>$$<br>p(Y|X) &#x3D; \frac{p(X|Y)p(Y)}{p(X)} &#x3D; \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)}<br>$$</p>
-<h4 id="1-2-1-概率密度"><a href="#1-2-1-概率密度" class="headerlink" title="1.2.1 概率密度"></a>1.2.1 概率密度</h4><p>考虑 $x &#x3D; g(y)$, 那么 $p_{x}(x)\delta x ≃ p_{y}(y)\delta y$. 从而有：<br>$$<br>p_{y}(y) &#x3D; p_{x}(x)|\frac{dy}{dx}| &#x3D; p_{x}(g(y))|g^{\prime}(y)|<br>$$<br>这里 $p_{x}, p_{y}$ 可以理解为针对随机变量 $x,y$ 的概率密度函数。</p>
-<p>连续形式的加法公式<br>$$<br>p(x) &#x3D; \int p(x,y) dy<br>$$</p>
-<p>连续形式的乘法公式<br>$$<br>p(x,y) &#x3D; p(y|x)p(x)<br>$$</p>
-<h4 id="1-2-2-期望和协方差"><a href="#1-2-2-期望和协方差" class="headerlink" title="1.2.2 期望和协方差"></a>1.2.2 期望和协方差</h4><p>离散和连续形式期望分别定义为：<br>$$<br>\mathbb{E}[f] &#x3D; \sum_{x}p(x)f(x)<br>$$</p>
-<p>$$<br>\mathbb{E}[f] &#x3D; \int p(x)f(x)dx<br>$$</p>
-<p>两种形式下，期望都可以通过采样估计：<br>$$<br>\mathbb{E}[f] ≃ \frac{1}{N} \sum_{n&#x3D;1}^{N} f(x_n)<br>$$</p>
-<p>多变量函数期望中，可以通过下标指定被平均的是哪个变量。例如下式是关于 $y$ 的函数<br>$$<br>\mathbb{E}_{x}[f(x,y)]<br>$$</p>
-<p>方差定义为<br>$$<br>\text{var}[f] &#x3D; \mathbb{E}[(f(x)-\mathbb{E}[f(x)])^2] &#x3D; \mathbb{E}[f(x)^2] - \mathbb{E}[f(x)]^2<br>$$</p>
-<p>变量自身方差<br>$$<br>\text{var}[x] &#x3D; \mathbb{E}[x^2] - \mathbb{E}[x]^2<br>$$</p>
-<p>变量 $x$, $y$ 的协方差定义为<br>$$<br>\text{cov}[x,y] &#x3D; \mathbb{E}<em>{x,y}[{x-\mathbb{E}[x]}{y-\mathbb{E}[y]}] &#x3D; \mathbb{E}</em>{x,y}[xy]-\mathbb{E}[x]\mathbb{E}[y]<br>$$<br>它表⽰在多⼤程度上 $x$ 和 $y$ 会共同变化。如果x和y相互独⽴，那么它们的协⽅差为0。</p>
-<p>在两个随机向量 $\bm{x}$ 和 $\bm{y}$ 的情形下，协⽅差是⼀个矩阵<br>$$<br>\text{cov}[\bm{x},\bm{y}] &#x3D; \mathbb{E}<em>{\bm{x},\bm{y}}[{\bm{x}-\mathbb{E}[\bm{x}]}{\bm{y}^{T}-\mathbb{E}[\bm{y}]^{T}}] &#x3D; \mathbb{E}</em>{\bm{x},\bm{y}}[\bm{x}\bm{y}^{T}]-\mathbb{E}[\bm{x}]\mathbb{E}[\bm{y}^{T}]<br>$$<br>考虑 $\bm{x}$ 各个分量的协方差时，记号可以简化<br>$$<br>\text{cov}[\bm{x}] ≡ \text{cov}[\bm{x},\bm{x}]<br>$$</p>
-<h4 id="1-2-3-贝叶斯概率"><a href="#1-2-3-贝叶斯概率" class="headerlink" title="1.2.3 贝叶斯概率"></a>1.2.3 贝叶斯概率</h4><p>贝叶斯公式的一个实际意义是，在观测到结果 $\mathcal{D}$ 前，我们对模型参数 $\bm{w}$ 有一个先验估计 $P(\bm{w})$, 观测数据的效果则可以贝叶斯公式表示<br>$$<br>p(\bm{w}|\mathcal{D}) &#x3D; \frac{p(\mathcal{D}|\bm{w})p(\bm{w})}{p(\mathcal{D})}<br>$$<br>我们可以用自然语言描述贝叶斯定理<br>$$<br>\text{posterior} \propto \text{likelihood} \times \text{prior}<br>$$<br>对上面的贝叶斯公式两边同时积分得到<br>$$<br>p(\mathcal{D}) &#x3D; \int p(\mathcal{D}|\bm{w})p(\bm{w}) d\bm{w}<br>$$<br>$p(\mathcal{D}|\bm{w})$ 由结果 $\mathcal{D}$ 来确定，可以看作关于 $\bm{w}$ 的函数。注意：似然函数不是 $\bm{w}$ 的概率分布，并且它关于 $\bm{w}$ 的积分并不（⼀定）等于1。</p>
+        <h2 id="绪论">1. 绪论</h2>
+<h3 id="概率论">1.2 概率论</h3>
+<p>概率的加法公式 <span
+class="math display"><em>p</em>(<em>X</em>) = ∑<sub><em>Y</em></sub>(<em>X</em>, <em>Y</em>)</span></p>
+<p>概率的乘法公式 <span
+class="math display"><em>p</em>(<em>X</em>, <em>Y</em>) = <em>p</em>(<em>Y</em>|<em>X</em>)<em>p</em>(<em>X</em>)</span></p>
+<p>贝叶斯公式 <span class="math display">$$
+p(Y|X) = \frac{p(X|Y)p(Y)}{p(X)} = \frac{p(X|Y)p(Y)}{\sum_{Y}
+p(X|Y)p(Y)}
+$$</span></p>
+<h4 id="概率密度">1.2.1 概率密度</h4>
+<p>考虑 <span
+class="math inline"><em>x</em> = <em>g</em>(<em>y</em>)</span>, 那么
+<span
+class="math inline"><em>p</em><sub><em>x</em></sub>(<em>x</em>)<em>δ</em><em>x</em> ≃ <em>p</em><sub><em>y</em></sub>(<em>y</em>)<em>δ</em><em>y</em></span>.
+从而有： <span class="math display">$$
+p_{y}(y) = p_{x}(x)|\frac{dy}{dx}| = p_{x}(g(y))|g^{\prime}(y)|
+$$</span> 这里 <span
+class="math inline"><em>p</em><sub><em>x</em></sub>, <em>p</em><sub><em>y</em></sub></span>
+可以理解为针对随机变量 <span
+class="math inline"><em>x</em>, <em>y</em></span> 的概率密度函数。</p>
+<p>连续形式的加法公式 <span
+class="math display"><em>p</em>(<em>x</em>) = ∫<em>p</em>(<em>x</em>, <em>y</em>)<em>d</em><em>y</em></span></p>
+<p>连续形式的乘法公式 <span
+class="math display"><em>p</em>(<em>x</em>, <em>y</em>) = <em>p</em>(<em>y</em>|<em>x</em>)<em>p</em>(<em>x</em>)</span></p>
+<h4 id="期望和协方差">1.2.2 期望和协方差</h4>
+<p>离散和连续形式期望分别定义为： <span
+class="math display">𝔼[<em>f</em>] = ∑<sub><em>x</em></sub><em>p</em>(<em>x</em>)<em>f</em>(<em>x</em>)</span></p>
+<p><span
+class="math display">𝔼[<em>f</em>] = ∫<em>p</em>(<em>x</em>)<em>f</em>(<em>x</em>)<em>d</em><em>x</em></span></p>
+<p>两种形式下，期望都可以通过采样估计： <span class="math display">$$
+\mathbb{E}[f] ≃ \frac{1}{N} \sum_{n=1}^{N} f(x_n)
+$$</span></p>
+<p>多变量函数期望中，可以通过下标指定被平均的是哪个变量。例如下式是关于
+<span class="math inline"><em>y</em></span> 的函数 <span
+class="math display">𝔼<sub><em>x</em></sub>[<em>f</em>(<em>x</em>, <em>y</em>)]</span></p>
+<p>方差定义为 <span
+class="math display">var[<em>f</em>] = 𝔼[(<em>f</em>(<em>x</em>) − 𝔼[<em>f</em>(<em>x</em>)])<sup>2</sup>] = 𝔼[<em>f</em>(<em>x</em>)<sup>2</sup>] − 𝔼[<em>f</em>(<em>x</em>)]<sup>2</sup></span></p>
+<p>变量自身方差 <span
+class="math display">var[<em>x</em>] = 𝔼[<em>x</em><sup>2</sup>] − 𝔼[<em>x</em>]<sup>2</sup></span></p>
+<p>变量 <span class="math inline"><em>x</em></span>, <span
+class="math inline"><em>y</em></span> 的协方差定义为 <span
+class="math display">cov[<em>x</em>, <em>y</em>] = 𝔼<sub><em>x</em>, <em>y</em></sub>[{<em>x</em> − 𝔼[<em>x</em>]}{<em>y</em> − 𝔼[<em>y</em>]}] = 𝔼<sub><em>x</em>, <em>y</em></sub>[<em>x</em><em>y</em>] − 𝔼[<em>x</em>]𝔼[<em>y</em>]</span>
+它表⽰在多⼤程度上 <span class="math inline"><em>x</em></span> 和 <span
+class="math inline"><em>y</em></span>
+会共同变化。如果x和y相互独⽴，那么它们的协⽅差为0。</p>
+<p>在两个随机向量 <span class="math inline"><strong>x</strong></span> 和
+<span class="math inline"><strong>y</strong></span>
+的情形下，协⽅差是⼀个矩阵 <span
+class="math display">cov[<strong>x</strong>, <strong>y</strong>] = 𝔼<sub><strong>x</strong>, <strong>y</strong></sub>[{<strong>x</strong> − 𝔼[<strong>x</strong>]}{<strong>y</strong><sup><em>T</em></sup> − 𝔼[<strong>y</strong>]<sup><em>T</em></sup>}] = 𝔼<sub><strong>x</strong>, <strong>y</strong></sub>[<strong>x</strong><strong>y</strong><sup><em>T</em></sup>] − 𝔼[<strong>x</strong>]𝔼[<strong>y</strong><sup><em>T</em></sup>]</span>
+考虑 <span class="math inline"><strong>x</strong></span>
+各个分量的协方差时，记号可以简化 <span
+class="math display">cov[<strong>x</strong>] ≡ cov[<strong>x</strong>, <strong>x</strong>]</span></p>
+<h4 id="贝叶斯概率">1.2.3 贝叶斯概率</h4>
+<p>贝叶斯公式的一个实际意义是，在观测到结果 <span
+class="math inline">𝒟</span> 前，我们对模型参数 <span
+class="math inline"><strong>w</strong></span> 有一个先验估计 <span
+class="math inline"><em>P</em>(<strong>w</strong>)</span>,
+观测数据的效果则可以贝叶斯公式表示 <span class="math display">$$
+p(\bm{w}|\mathcal{D}) =
+\frac{p(\mathcal{D}|\bm{w})p(\bm{w})}{p(\mathcal{D})}
+$$</span> 我们可以用自然语言描述贝叶斯定理 <span
+class="math display">posterior ∝ likelihood × prior</span>
+对上面的贝叶斯公式两边同时积分得到 <span
+class="math display"><em>p</em>(𝒟) = ∫<em>p</em>(𝒟|<strong>w</strong>)<em>p</em>(<strong>w</strong>)<em>d</em><strong>w</strong></span>
+<span class="math inline"><em>p</em>(𝒟|<strong>w</strong>)</span> 由结果
+<span class="math inline">𝒟</span> 来确定，可以看作关于 <span
+class="math inline"><strong>w</strong></span> 的函数。注意：似然函数不是
+<span class="math inline"><strong>w</strong></span>
+的概率分布，并且它关于 <span
+class="math inline"><strong>w</strong></span>
+的积分并不（⼀定）等于1。</p>
 <p>贝叶斯观点的⼀个优点是对先验概率的包含是很⾃然的事情。</p>
-<h4 id="1-2-4-高斯分布"><a href="#1-2-4-高斯分布" class="headerlink" title="1.2.4 高斯分布"></a>1.2.4 高斯分布</h4><p>一元和多元高斯分布的定义分别为<br>$$<br>\mathcal{N}(x|\mu, \sigma^2) &#x3D; \frac{1}{(2\pi\sigma^2)^{\frac{1}{2}}}\exp(-\frac{1}{2\sigma^{2}}(x-\mu)^{2})<br>$$</p>
-<p>$$<br>\mathcal{N}(\bm{x}|\bm{\mu}, \bm{\sigma}^2) &#x3D; \frac{1}{(2\pi)^{\frac{D}{2}}}\frac{1}{|\Sigma|^{\frac{1}{2}}}\exp(-\frac{1}{2}(\bm{x}-\bm{\mu})^{T}\Sigma^{-1}(\bm{x}-\bm{\mu}))<br>$$</p>
-<p>我们从均值 $\mu$, 方差 $\sigma^{2}$ 的高斯分布中独立同分布地获取 $N$ 次观测，记为 $\mathbf{x} &#x3D; {x_1, \dots, x_N}^{T}$. 我们已经看到两个独⽴事件的联合概率可以由各个事件的边缘概率的乘积得到。由于我们的数据集 $\mathbf{x}$ 是独⽴同分布的，因此给定 $\mu$ 和 $\sigma^2$, 我们可以给出数据集的概率，同时也是似然函数，为<br>$$<br>p(\mathbf{x}|\mu, \sigma^2) &#x3D; \prod_{n&#x3D;1}^{N} \mathcal{N}(x_n|\mu,\sigma^{2})<br>$$<br>对数似然函数为<br>$$<br>\ln p(\mathbf{x}|\mu, \sigma^2) &#x3D; -\frac{1}{2\sigma^2}\sum_{n&#x3D;1}^{N}(x_n-\mu)^{2} - \frac{N}{2}\ln\sigma^2 - \frac{N}{2}\ln(2\pi)<br>$$<br>对 $\mu$ 求导，得到 $\mu$ 的最大似然解<br>$$<br>\begin{equation}<br>\begin{aligned}<br>\frac{\partial p(\mathbf{x}|\mu, \sigma^2)}{\partial \mu} &amp;&#x3D; \frac{\partial (-\frac{1}{2\sigma^2}\sum_{n&#x3D;1}^{N}(x_n-\mu)^{2})}{\partial \mu}  \notag \<br>&amp;&#x3D; -\frac{1}{2\sigma^2}\sum_{n&#x3D;1}^{N}(-2(x_n-\mu)) \<br>&amp;&#x3D; \frac{\sum_{n&#x3D;1}^{N}(x_n-\mu)}{\sigma^2}<br>\end{aligned}<br>\end{equation}<br>$$<br>$$<br>\begin{equation}<br>\begin{aligned}<br>\frac{\sum_{n&#x3D;1}^{N}(x_n-\mu_{ML})}{\sigma^2} &amp;&#x3D; 0 \notag \<br>\mu_{ML} &amp;&#x3D; \frac{1}{N}\sum_{n&#x3D;1}^{N}x_n<br>\end{aligned}<br>\end{equation}<br>$$</p>
-<p>同理，对 $\sigma^2$ 求导，得到 $\sigma^2$ 的最大似然解<br>$$<br>\begin{equation}<br>\begin{aligned}<br>\frac{\partial p(\mathbf{x}|\mu, \sigma^2)}{\partial \sigma^2} &amp;&#x3D; \frac{\partial (-\frac{1}{2\sigma^2}\sum_{n&#x3D;1}^{N}(x_n-\mu)^{2}-\frac{N}{2}\ln\sigma^2)}{\partial \sigma^2} \notag \<br>&amp;&#x3D; \frac{\sum_{n&#x3D;1}^{N}(x_n-\mu)^{2}}{2\sigma^3} - \frac{N}{2\sigma}<br>\end{aligned}<br>\end{equation}<br>$$<br>$$<br>\begin{equation}<br>\begin{aligned}<br>\frac{\sum_{n&#x3D;1}^{N}(x_n-\mu)^{2}}{2\sigma^3} - \frac{N}{2\sigma} &amp;&#x3D; 0 \notag \<br>\sigma_{ML}^2 &amp;&#x3D; \frac{\sum_{n&#x3D;1}^{N}(x_n-\mu)^{2}}{N}<br>\end{aligned}<br>\end{equation}<br>$$<br>用 $\mu$ 的最大似然解 $\mu_{ML}$ 替代 $\mu$, 得到<br>$$<br>\sigma_{ML}^2 &#x3D; \frac{\sum_{n&#x3D;1}^{N}(x_n-\mu_{ML})^{2}}{N}<br>$$</p>
-<p>$\mu_{ML}$ 显然是 $\mu$ 的无偏估计；但由于我们在计算 $\sigma^{2}$ 时使用 $\mu_{ML}$ 替代了 $\mu$, 因此 $\sigma_{ML}^2$ 对 $\sigma^{2}$ 的估计是有偏的。<br>$$<br>\mathbf{E}(\mu_{ML}) &#x3D; \mu, \quad \mathbf{E}[\sigma_{ML}^2] &#x3D; (\frac{N-1}{N})\sigma^2<br>$$<br>可以使用方差的无偏估计<br>$$<br>\widetilde{\sigma}^{2} &#x3D; \frac{N}{N-1}\sigma_{ML}^{2} &#x3D; \frac{1}{N-1}\sum_{n&#x3D;1}^{N}(x_n-\mu_{ML})^{2}<br>$$</p>
-<p><img src="/./PRML-1_src/1.png" alt="方差估计有偏"></p>
-<h4 id="1-2-5-重新考察曲线拟合问题"><a href="#1-2-5-重新考察曲线拟合问题" class="headerlink" title="1.2.5 重新考察曲线拟合问题"></a>1.2.5 重新考察曲线拟合问题</h4><p>曲线拟合的任务目标是根据 $N$ 个输入 $\mathbf{x}&#x3D;{x_1,\dots,x_N}^{T}$ 和对应的目标值 $\mathbf{t}&#x3D;{t_1,\dots,t_N}^{T}$, 在给出输入变量的新值 $x$ 的情况下，对目标变量 $t$ 进行预测。<strong>我们假定给定 $x$ 的值，对应的 $t$ 值服从高斯分布。</strong> 那么有<br>$$<br>p(t|x,\bm{w},\beta) &#x3D; \mathcal{N}(t|y(x,\bm{w}),\beta^{-1})<br>$$<br>其中 $\beta$ 表示精度参数，衡量方差。</p>
-<p>已有数据 ${\mathbf{x},\mathbf{t}}$ 的似然函数为<br>$$<br>p(\mathbf{t}|\mathbf{x},\bm{w},\beta) &#x3D; \prod_{n&#x3D;1}^{N}\mathcal{N}(t_n|y(x_n,\bm{w}),\beta^{-1})<br>$$<br>对数似然函数为<br>$$<br>\ln p(\mathbf{t}|\mathbf{x},\bm{w}, \beta) &#x3D; -\frac{\beta}{2}\sum_{n&#x3D;1}^{N}(y(x_n,\bm{w})-t_n)^{2} + \frac{N}{2}\ln\beta - \frac{N}{2}\ln(2\pi)<br>$$<br>考虑 $\bm{w}$ 的最大似然解时，首先忽略等式右侧的后两项，而后将 $\frac{\beta}{2}$ 替换为 $\frac{1}{2}$ (因为这不影响最大值出现位置)，最后将“最大化对数似然函数”替换为“最小化负对数似然函数”，<strong>我们就得到了平方误差损失函数。</strong> 这里不能像计算 $\mu_{ML}$ 一样计算 $\bm{w}_{ML}$ 的解析解，因为我们无法计算 $y$ 对 $\bm{w}$ 的导数。</p>
-<p>可以依靠 $\bm{w}<em>{ML}$ 计算 $\beta</em>{ML}$ 的最大似然解<br>$$<br>\frac{1}{\beta_{ML}} &#x3D; \frac{1}{N}\sum_{n&#x3D;1}^{N}{y(x_n,\bm{w}_{ML})-t_n}^2<br>$$</p>
-<p>考虑引入 $\bm{w}$ 上的先验分布，以一个多元高斯分布为例。<br>$$<br>p(\bm{w}|\alpha) &#x3D; \mathcal(\bm{w}|\bm{0},\alpha^{-1}\bm{I}) &#x3D; (\frac{\alpha}{2\pi})^{\frac{M+1}{2}}\exp(-\frac{\alpha}{2}\bm{w}^{T}\bm{w})<br>$$<br>相当于一个各方向 scaling 均为 $\alpha^{-1}$, rotation 为单位矩阵的单位球高斯分布。$M$ 为 $\bm{w}$ (作为多项式函数的系数) 的最高次数。$M+1$ 为 $\bm{w}$ 的维度。</p>
-<p>我们可以得到如下关于 $\bm{w}$ 的贝叶斯公式<br>$$<br>\begin{equation}<br>\begin{aligned}<br>p(\bm{w}|\alpha, \beta, \mathbf{x},\mathbf{t}) &amp;&#x3D; p(\alpha,\beta,\mathbf{x},\mathbf{t}|\bm{w})p(\bm{w}) \notag \<br>&amp;&#x3D; p(t|\mathbf{x},\alpha.\beta,\bm{w})p(\mathbf{x},\alpha,\beta|\bm{w})p(\bm{w}) \<br>&amp;&#x3D; p(t|\mathbf{x},\beta,\bm{w})p(\mathbf{x},\alpha,\beta)p(\bm{w}|\alpha) \<br>&amp;\propto p(t|\mathbf{x},\beta,\bm{w})p(\bm{w}|\alpha)<br>\end{aligned}<br>\end{equation}<br>$$<br>这称为最大后验 (MAP)。最大化后验概率时，通过最小化负对数后验，等价于最小化下式<br>$$<br>\frac{\beta}{2}\sum_{n&#x3D;1}^{N}(y(x_n,\bm{w})-t_n)^{2} + \frac{\alpha}{2}\bm{w}^{T}\bm{w}<br>$$<br>这等价使用于 L2 正则项的平方误差损失函数。</p>
-<h4 id="1-2-6-贝叶斯曲线拟合"><a href="#1-2-6-贝叶斯曲线拟合" class="headerlink" title="1.2.6 贝叶斯曲线拟合"></a>1.2.6 贝叶斯曲线拟合</h4><p>later</p>
-<h3 id="1-5-决策论"><a href="#1-5-决策论" class="headerlink" title="1.5 决策论"></a>1.5 决策论</h3><p>决策论可以看作概率论的下一步。当概率论给出不确定性后，我们需要一套理论来根据不确定性选出最优的决定。</p>
-<p>记 $\bm{x}$ 为我们遇到的情形, $\mathcal{C}<em>k$ 为我们可以做出的第 $k$ 个决策类。那么<br>$$<br>p(\mathcal{C}</em>{k}|\bm{x}) &#x3D; \frac{p(\bm{x}|\mathcal{C}_k)p(\mathcal{C}_k)}{p(\bm{x})}<br>$$<br>那么如果我们的⽬标是最⼩化把 $x$ 分到错误类别中的可能性，那么我们要选择有最⼤后验概率的类别。</p>
-<h4 id="1-5-1-最⼩化错误分类率"><a href="#1-5-1-最⼩化错误分类率" class="headerlink" title="1.5.1 最⼩化错误分类率"></a>1.5.1 最⼩化错误分类率</h4><p>我们需要给每一个决策类别划分一个决策区域 $\mathcal{R}_k$. 考虑两个决策类的情形，那么我们犯错误的概率为<br>$$<br>\begin{equation}<br>\begin{aligned}<br>p(\text{mistake}) &amp;&#x3D; p(\bm{x}\in \mathcal{R}_1,\mathcal{C}_2) + p(\bm{x}\in \mathcal{R}_2,\mathcal{C}<em>1) \notag \<br>&amp;&#x3D; \int</em>{\mathcal{R}_1}p(\bm{x},\mathcal{C}<em>2)d{\bm{x}} + \int</em>{\mathcal{R}_2}p(\bm{x},\mathcal{C}_1)d{\bm{x}}<br>\end{aligned}<br>\end{equation}<br>$$<br>那么显然，为了使 $p(\text{mistake})$ 尽量小，我们要将 $\bm{x} 划分到 $ $p(\bm{x}|\mathcal{C}_k)$ 这一后验概率尽量大的类别。</p>
+<h4 id="高斯分布">1.2.4 高斯分布</h4>
+<p>一元和多元高斯分布的定义分别为 <span class="math display">$$
+\mathcal{N}(x|\mu, \sigma^2) =
+\frac{1}{(2\pi\sigma^2)^{\frac{1}{2}}}\exp(-\frac{1}{2\sigma^{2}}(x-\mu)^{2})
+$$</span></p>
+<p><span class="math display">$$
+\mathcal{N}(\bm{x}|\bm{\mu}, \bm{\sigma}^2) =
+\frac{1}{(2\pi)^{\frac{D}{2}}}\frac{1}{|\Sigma|^{\frac{1}{2}}}\exp(-\frac{1}{2}(\bm{x}-\bm{\mu})^{T}\Sigma^{-1}(\bm{x}-\bm{\mu}))
+$$</span></p>
+<p>我们从均值 <span class="math inline"><em>μ</em></span>, 方差 <span
+class="math inline"><em>σ</em><sup>2</sup></span>
+的高斯分布中独立同分布地获取 <span class="math inline"><em>N</em></span>
+次观测，记为 <span
+class="math inline"><strong>x</strong> = {<em>x</em><sub>1</sub>, …, <em>x</em><sub><em>N</em></sub>}<sup><em>T</em></sup></span>.
+我们已经看到两个独⽴事件的联合概率可以由各个事件的边缘概率的乘积得到。由于我们的数据集
+<span class="math inline"><strong>x</strong></span>
+是独⽴同分布的，因此给定 <span class="math inline"><em>μ</em></span> 和
+<span class="math inline"><em>σ</em><sup>2</sup></span>,
+我们可以给出数据集的概率，同时也是似然函数，为 <span
+class="math display">$$
+p(\mathbf{x}|\mu, \sigma^2) = \prod_{n=1}^{N}
+\mathcal{N}(x_n|\mu,\sigma^{2})
+$$</span> 对数似然函数为 <span class="math display">$$
+\ln p(\mathbf{x}|\mu, \sigma^2) =
+-\frac{1}{2\sigma^2}\sum_{n=1}^{N}(x_n-\mu)^{2} - \frac{N}{2}\ln\sigma^2
+- \frac{N}{2}\ln(2\pi)
+$$</span> 对 <span class="math inline"><em>μ</em></span> 求导，得到
+<span class="math inline"><em>μ</em></span> 的最大似然解 <span
+class="math display">$$
+\begin{equation}
+\begin{aligned}
+\frac{\partial p(\mathbf{x}|\mu, \sigma^2)}{\partial \mu} &amp;=
+\frac{\partial
+(-\frac{1}{2\sigma^2}\sum_{n=1}^{N}(x_n-\mu)^{2})}{\partial \mu}  \notag
+\\
+&amp;= -\frac{1}{2\sigma^2}\sum_{n=1}^{N}(-2(x_n-\mu)) \\
+&amp;= \frac{\sum_{n=1}^{N}(x_n-\mu)}{\sigma^2}
+\end{aligned}
+\end{equation}
+$$</span> <span class="math display">$$
+\begin{equation}
+\begin{aligned}
+\frac{\sum_{n=1}^{N}(x_n-\mu_{ML})}{\sigma^2} &amp;= 0 \notag \\
+\mu_{ML} &amp;= \frac{1}{N}\sum_{n=1}^{N}x_n
+\end{aligned}
+\end{equation}
+$$</span></p>
+<p>同理，对 <span class="math inline"><em>σ</em><sup>2</sup></span>
+求导，得到 <span class="math inline"><em>σ</em><sup>2</sup></span>
+的最大似然解 <span class="math display">$$
+\begin{equation}
+\begin{aligned}
+\frac{\partial p(\mathbf{x}|\mu, \sigma^2)}{\partial \sigma^2} &amp;=
+\frac{\partial
+(-\frac{1}{2\sigma^2}\sum_{n=1}^{N}(x_n-\mu)^{2}-\frac{N}{2}\ln\sigma^2)}{\partial
+\sigma^2} \notag \\
+&amp;= \frac{\sum_{n=1}^{N}(x_n-\mu)^{2}}{2\sigma^3} - \frac{N}{2\sigma}
+\end{aligned}
+\end{equation}
+$$</span> <span class="math display">$$
+\begin{equation}
+\begin{aligned}
+\frac{\sum_{n=1}^{N}(x_n-\mu)^{2}}{2\sigma^3} - \frac{N}{2\sigma} &amp;=
+0 \notag \\
+\sigma_{ML}^2 &amp;= \frac{\sum_{n=1}^{N}(x_n-\mu)^{2}}{N}
+\end{aligned}
+\end{equation}
+$$</span> 用 <span class="math inline"><em>μ</em></span> 的最大似然解
+<span
+class="math inline"><em>μ</em><sub><em>M</em><em>L</em></sub></span>
+替代 <span class="math inline"><em>μ</em></span>, 得到 <span
+class="math display">$$
+\sigma_{ML}^2 = \frac{\sum_{n=1}^{N}(x_n-\mu_{ML})^{2}}{N}
+$$</span></p>
+<p><span
+class="math inline"><em>μ</em><sub><em>M</em><em>L</em></sub></span>
+显然是 <span class="math inline"><em>μ</em></span>
+的无偏估计；但由于我们在计算 <span
+class="math inline"><em>σ</em><sup>2</sup></span> 时使用 <span
+class="math inline"><em>μ</em><sub><em>M</em><em>L</em></sub></span>
+替代了 <span class="math inline"><em>μ</em></span>, 因此 <span
+class="math inline"><em>σ</em><sub><em>M</em><em>L</em></sub><sup>2</sup></span>
+对 <span class="math inline"><em>σ</em><sup>2</sup></span>
+的估计是有偏的。 <span class="math display">$$
+\mathbf{E}(\mu_{ML}) = \mu, \quad \mathbf{E}[\sigma_{ML}^2] =
+(\frac{N-1}{N})\sigma^2
+$$</span> 可以使用方差的无偏估计 <span class="math display">$$
+\widetilde{\sigma}^{2} = \frac{N}{N-1}\sigma_{ML}^{2} =
+\frac{1}{N-1}\sum_{n=1}^{N}(x_n-\mu_{ML})^{2}
+$$</span></p>
+<figure>
+<img src="./PRML-1_src/1.png" alt="方差估计有偏" />
+<figcaption aria-hidden="true">方差估计有偏</figcaption>
+</figure>
+<h4 id="重新考察曲线拟合问题">1.2.5 重新考察曲线拟合问题</h4>
+<p>曲线拟合的任务目标是根据 <span class="math inline"><em>N</em></span>
+个输入 <span
+class="math inline"><strong>x</strong> = {<em>x</em><sub>1</sub>, …, <em>x</em><sub><em>N</em></sub>}<sup><em>T</em></sup></span>
+和对应的目标值 <span
+class="math inline"><strong>t</strong> = {<em>t</em><sub>1</sub>, …, <em>t</em><sub><em>N</em></sub>}<sup><em>T</em></sup></span>,
+在给出输入变量的新值 <span class="math inline"><em>x</em></span>
+的情况下，对目标变量 <span class="math inline"><em>t</em></span>
+进行预测。<strong>我们假定给定 <span
+class="math inline"><em>x</em></span> 的值，对应的 <span
+class="math inline"><em>t</em></span> 值服从高斯分布。</strong> 那么有
+<span
+class="math display"><em>p</em>(<em>t</em>|<em>x</em>, <strong>w</strong>, <em>β</em>) = 𝒩(<em>t</em>|<em>y</em>(<em>x</em>, <strong>w</strong>), <em>β</em><sup>−1</sup>)</span>
+其中 <span class="math inline"><em>β</em></span>
+表示精度参数，衡量方差。</p>
+<p>已有数据 <span
+class="math inline">{<strong>x</strong>, <strong>t</strong>}</span>
+的似然函数为 <span class="math display">$$
+p(\mathbf{t}|\mathbf{x},\bm{w},\beta) =
+\prod_{n=1}^{N}\mathcal{N}(t_n|y(x_n,\bm{w}),\beta^{-1})
+$$</span> 对数似然函数为 <span class="math display">$$
+\ln p(\mathbf{t}|\mathbf{x},\bm{w}, \beta) =
+-\frac{\beta}{2}\sum_{n=1}^{N}(y(x_n,\bm{w})-t_n)^{2} +
+\frac{N}{2}\ln\beta - \frac{N}{2}\ln(2\pi)
+$$</span> 考虑 <span class="math inline"><strong>w</strong></span>
+的最大似然解时，首先忽略等式右侧的后两项，而后将 <span
+class="math inline">$\frac{\beta}{2}$</span> 替换为 <span
+class="math inline">$\frac{1}{2}$</span>
+(因为这不影响最大值出现位置)，最后将“最大化对数似然函数”替换为“最小化负对数似然函数”，<strong>我们就得到了平方误差损失函数。</strong>
+这里不能像计算 <span
+class="math inline"><em>μ</em><sub><em>M</em><em>L</em></sub></span>
+一样计算 <span
+class="math inline"><strong>w</strong><sub><em>M</em><em>L</em></sub></span>
+的解析解，因为我们无法计算 <span class="math inline"><em>y</em></span>
+对 <span class="math inline"><strong>w</strong></span> 的导数。</p>
+<p>可以依靠 <span
+class="math inline"><strong>w</strong><sub><em>M</em><em>L</em></sub></span>
+计算 <span
+class="math inline"><em>β</em><sub><em>M</em><em>L</em></sub></span>
+的最大似然解 <span class="math display">$$
+\frac{1}{\beta_{ML}} =
+\frac{1}{N}\sum_{n=1}^{N}\{y(x_n,\bm{w}_{ML})-t_n\}^2
+$$</span></p>
+<p>考虑引入 <span class="math inline"><strong>w</strong></span>
+上的先验分布，以一个多元高斯分布为例。 <span class="math display">$$
+p(\bm{w}|\alpha) = \mathcal(\bm{w}|\bm{0},\alpha^{-1}\bm{I}) =
+(\frac{\alpha}{2\pi})^{\frac{M+1}{2}}\exp(-\frac{\alpha}{2}\bm{w}^{T}\bm{w})
+$$</span> 相当于一个各方向 scaling 均为 <span
+class="math inline"><em>α</em><sup>−1</sup></span>, rotation
+为单位矩阵的单位球高斯分布。<span class="math inline"><em>M</em></span>
+为 <span class="math inline"><strong>w</strong></span>
+(作为多项式函数的系数) 的最高次数。<span
+class="math inline"><em>M</em> + 1</span> 为 <span
+class="math inline"><strong>w</strong></span> 的维度。</p>
+<p>我们可以得到如下关于 <span
+class="math inline"><strong>w</strong></span> 的贝叶斯公式 <span
+class="math display">$$
+\begin{equation}
+\begin{aligned}
+p(\bm{w}|\alpha, \beta, \mathbf{x},\mathbf{t}) &amp;=
+p(\alpha,\beta,\mathbf{x},\mathbf{t}|\bm{w})p(\bm{w}) \notag \\
+&amp;=
+p(t|\mathbf{x},\alpha.\beta,\bm{w})p(\mathbf{x},\alpha,\beta|\bm{w})p(\bm{w})
+\\
+&amp;=
+p(t|\mathbf{x},\beta,\bm{w})p(\mathbf{x},\alpha,\beta)p(\bm{w}|\alpha)
+\\
+&amp;\propto p(t|\mathbf{x},\beta,\bm{w})p(\bm{w}|\alpha)
+\end{aligned}
+\end{equation}
+$$</span> 这称为最大后验
+(MAP)。最大化后验概率时，通过最小化负对数后验，等价于最小化下式 <span
+class="math display">$$
+\frac{\beta}{2}\sum_{n=1}^{N}(y(x_n,\bm{w})-t_n)^{2} +
+\frac{\alpha}{2}\bm{w}^{T}\bm{w}
+$$</span> 这等价使用于 L2 正则项的平方误差损失函数。</p>
+<h4 id="贝叶斯曲线拟合">1.2.6 贝叶斯曲线拟合</h4>
+<p>later</p>
+<h3 id="决策论">1.5 决策论</h3>
+<p>决策论可以看作概率论的下一步。当概率论给出不确定性后，我们需要一套理论来根据不确定性选出最优的决定。</p>
+<p>记 <span class="math inline"><strong>x</strong></span>
+为我们遇到的情形, <span
+class="math inline">𝒞<sub><em>k</em></sub></span> 为我们可以做出的第
+<span class="math inline"><em>k</em></span> 个决策类。那么 <span
+class="math display">$$
+p(\mathcal{C}_{k}|\bm{x}) =
+\frac{p(\bm{x}|\mathcal{C}_k)p(\mathcal{C}_k)}{p(\bm{x})}
+$$</span> 那么如果我们的⽬标是最⼩化把 <span
+class="math inline"><em>x</em></span>
+分到错误类别中的可能性，那么我们要选择有最⼤后验概率的类别。</p>
+<h4 id="最化错误分类率">1.5.1 最⼩化错误分类率</h4>
+<p>我们需要给每一个决策类别划分一个决策区域 <span
+class="math inline">ℛ<sub><em>k</em></sub></span>.
+考虑两个决策类的情形，那么我们犯错误的概率为 <span
+class="math display">$$
+\begin{equation}
+\begin{aligned}
+p(\text{mistake}) &amp;= p(\bm{x}\in \mathcal{R}_1,\mathcal{C}_2) +
+p(\bm{x}\in \mathcal{R}_2,\mathcal{C}_1) \notag \\
+&amp;= \int_{\mathcal{R}_1}p(\bm{x},\mathcal{C}_2)d{\bm{x}} +
+\int_{\mathcal{R}_2}p(\bm{x},\mathcal{C}_1)d{\bm{x}}
+\end{aligned}
+\end{equation}
+$$</span> 那么显然，为了使 <span
+class="math inline"><em>p</em>(mistake)</span> 尽量小，我们要将 $ 划分到
+$ <span
+class="math inline"><em>p</em>(<strong>x</strong>|𝒞<sub><em>k</em></sub>)</span>
+这一后验概率尽量大的类别。</p>
+<p>最大化正确分类概率同理 <span class="math display">$$
+p(\text{correct}) = \sum_{k=1}^{K}p(x\in\mathcal{R}_k,\mathcal{C}_k) =
+\sum_{k=1}^{K}\int_{\mathcal{R}_k}p(\bm{x},\mathcal{C}_k)d\bm{x}
+$$</span></p>
+<h4 id="最小化期望损失">1.5.2 最小化期望损失</h4>
+<p>有时做出不同错误决策的代价可能不一致，又一些错误决策的代价会明显高于另一些，这时我们可以使用
+<strong>损失函数</strong>
+来衡量不同错误决策的代价大小，并借此尽量规避代价更大的错误决策。我们要最小化平均损失，其定义为
+<span
+class="math display">𝔼[<em>L</em>] = ∑<sub><em>k</em></sub>∑<sub><em>j</em></sub>∫<sub>ℛ<sub><em>j</em></sub></sub><em>L</em><sub><em>k</em><em>j</em></sub><em>p</em>(<strong>x</strong>, 𝒞<sub><em>k</em></sub>)<em>d</em><strong>x</strong></span>
+我们的目标是对于每个可能的 <span
+class="math inline"><strong>x</strong></span>, 选择 <span
+class="math inline">ℛ<sub><em>j</em></sub></span>
+来使平均损失最小，相当于选择 <span
+class="math inline">ℛ<sub><em>j</em></sub></span> 最小化 <span
+class="math display">∑<sub><em>k</em></sub><em>L</em><sub><em>k</em><em>j</em></sub><em>p</em>(𝒞<sub>𝓀</sub>|<strong>x</strong>)</span></p>
+<h4 id="拒绝选项">1.5.3 拒绝选项</h4>
+<p>值得一提的是， <span
+class="math display">∑<sub><em>k</em></sub><em>p</em>(𝒞<sub><em>k</em></sub>|<strong>x</strong>) = 1</span></p>
+<p>有时我们不希望在最大的 <span
+class="math inline"><em>p</em>(𝒞<sub><em>k</em></sub>|<strong>x</strong>)</span>
+比较小时仍然做出决策，而是希望此时避免进行决策，因此可以选择一个 <span
+class="math inline"><em>θ</em> ∈ [0, 1]</span>, 在 <span
+class="math inline">max<sub><em>k</em></sub><em>p</em>(𝒞<sub><em>k</em></sub>|<strong>x</strong>) ≤ <em>θ</em></span>
+时拒绝输入 <span class="math inline"><strong>x</strong></span>.
+其很容易扩展到包含损失函数的情形。</p>
+<h4 id="推断和决策">1.5.4 推断和决策</h4>
+<p>我们有三种方法解决决策问题，由复杂到简单分别如下 1.
+作为一个推断问题，首先确定 <span
+class="math inline"><em>p</em>(<strong>x</strong>|𝒞<sub><em>k</em></sub>)</span>,
+并推断先验概率 <span
+class="math inline"><em>p</em>(𝒞<sub><em>k</em></sub>)</span>,
+而后通过贝叶斯定理计算后验概率分布；或者直接对联合概率分布 <span
+class="math inline"><em>p</em>(<strong>x</strong>, 𝒞<sub><em>k</em></sub>)</span>
+进行建模。这称为 <strong>生成式模型</strong>, 因为我们可以直接通过采样来
+<strong>生成新样本</strong>。 2. 首先通过已有样本对后验概率 <span
+class="math inline"><em>p</em>(𝒞<sub><em>k</em></sub>|<strong>x</strong>)</span>
+进行建模学习，然后对新样本进行分类。这称为 <strong>判别式模型</strong>。
+3.
+找到一个判别函数直接根据输出生成判别的类别。该情况下，概率不起作用。（例如
+SVM）</p>
+<ol start="3" type="a">
+<li><p>无法建模后验概率，而我们有许多理由需要后验概率，例如拒绝选项，又例如有时我们有多个条件独立的指标
+<span
+class="math inline"><strong>x</strong><sub><em>i</em></sub></span>,
+我们希望联合地进行决策。</p></li>
+<li><p>所代表的生成式模型无疑是可以进行决策的，例如 Diffusion Model is
+Secretly a Zero-Shot Classifier,
+但是如果我们只想进行决策，它会严重浪费资源。因为由于 <span
+class="math inline"><strong>x</strong></span>
+的维度很高，我们需要大量数据才能确定出类的条件概率密度。另外，类的条件密度（似然函数）可能包含许多对后验概率几乎没有影响的结构（例如概率密度的峰值位置），而如果我们要建模先验分布，这些必需考虑在内。</p></li>
+</ol>
+<figure>
+<img src="./PRML-1_src/2.png" alt="先验分布的冗余结构" />
+<figcaption aria-hidden="true">先验分布的冗余结构</figcaption>
+</figure>
+<h4 id="回归问题的损失函数">1.5.5 回归问题的损失函数</h4>
+<p>对于每个输入 <span class="math inline"><strong>x</strong></span>,
+选择一个对 <span class="math inline"><em>t</em></span> 值的估计 <span
+class="math inline"><em>y</em>(<strong>x</strong>)</span>, 造成一个损失
+<span
+class="math inline"><em>L</em>(<em>t</em>, <em>y</em>(<strong>x</strong>))</span>.
+那么期望损失是 <span
+class="math display">𝔼[<em>L</em>] = ∫∫<em>L</em>(<em>t</em>, <em>y</em>(<strong>x</strong>))<em>p</em>(<strong>x</strong>, <em>t</em>)<em>d</em><strong>x</strong><em>d</em><em>t</em></span>
+当我们选择平方损失时， <span
+class="math display">𝔼[<em>L</em>] = ∫∫(<em>t</em> − <em>y</em>(<strong>x</strong>))<sup>2</sup><em>p</em>(<strong>x</strong>, <em>t</em>)<em>d</em><strong>x</strong><em>d</em><em>t</em></span>
+这里最小化 <span
+class="math inline"><strong>E</strong>[<em>L</em>]</span>
+的方式没看懂，但还有另一种： <span class="math display">$$
+\begin{equation}
+\begin{aligned}
+\{y(\bm{x})-t\}^2 &amp;= \{y(\bm{x}) − \mathbb{E}[t | \bm{x}] +
+\mathbb{E}[t | \bm{x}] − t\}^2 \notag \\
+&amp;= \{y(x) − \mathbb{E}[t | \bm{x}]\}^2 + 2\{y(\bm{x}) − \mathbb{E}[t
+| \bm{x}]\}\{\mathbb{E}[t | \bm{x}] − t\} + \{\mathbb{E}[t | \bm{x}] −
+t\}^2 \\
+\end{aligned}
+\end{equation}
+$$</span> 对第一项积分 <span class="math display">$$
+\begin{equation}
+\begin{aligned}
+\int \int \{y(\bm{x}) − \mathbb{E}[t | \bm{x}]\}^2 p(\bm{x},t)d\bm{x}dt
+&amp;= \int \{y(x) − \mathbb{E}[t | \bm{x}]\}^2 \left(\int
+p(\bm{x},t)dt\right)d\bm{x}  \notag \\
+&amp;= \int \{y(x) − \mathbb{E}[t | \bm{x}]\}^2 p(\bm{x})d\bm{x}
+\end{aligned}
+\end{equation}
+$$</span> 对第二项积分 <span class="math display">$$
+\begin{equation}
+\begin{aligned}
+\int \int 2\{y(\bm{x}) − \mathbb{E}[t | \bm{x}]\}\{\mathbb{E}[t |
+\bm{x}] − t\}p(\bm{x},t)d\bm{x}dt &amp;=  \int 2\{y(\bm{x}) −
+\mathbb{E}[t | \bm{x}]\}p(\bm{x}) \left( \int \{\mathbb{E}[t | \bm{x}] −
+t\}p(t|\bm{x}) dt \right) d\bm{x} \notag \\
+\end{aligned}
+\end{equation}
+$$</span> 这里 <span
+class="math inline">∫𝔼[<em>t</em>|<strong>x</strong>]<em>p</em>(<em>t</em>|<strong>x</strong>)<em>d</em><em>t</em> = 𝔼[<em>t</em>|<strong>x</strong>]∫<em>p</em>(<em>t</em>|<strong>x</strong>)<em>d</em><em>t</em> = 𝔼[<em>t</em>|<strong>x</strong>]</span>,
+<span
+class="math inline">∫<em>t</em><em>p</em>(<em>t</em>|<strong>x</strong>)<em>d</em><em>t</em> = 𝔼[<em>t</em>|<strong>x</strong>]</span>,
+故内层积分为 <span class="math inline">0</span>,
+从而第二项积分值为0.</p>
+<p>对第三项积分，首先我们有 <span
+class="math display">𝔼[<em>f</em>(<strong>x</strong>, <em>t</em>)|<strong>x</strong>] = ∫<em>f</em>(<strong>x</strong>, <em>t</em>)<em>p</em>(<em>t</em>|<strong>x</strong>)<em>d</em><strong>x</strong></span>
+从而 <span class="math display">$$
+\begin{equation}
+\begin{aligned}
+\int \int \{\mathbb{E}[t | \bm{x}] − t\}^2p(\bm{x},t)d\bm{x}dt &amp;=
+\int p(\bm{x})\left(\int \{\mathbb{E}[t | \bm{x}] − t\}^2
+p(t|\bm{x})dt\right)  \notag \\
+&amp;= \int \text{var}[t|\bm{x}]p(\bm{x})d\bm{x}
+\end{aligned}
+\end{equation}
+$$</span> 这里为了最小化第一项的积分，我们需要使 <span
+class="math inline"><em>y</em>(<strong>x</strong>) = 𝔼[<em>t</em>|<strong>x</strong>]</span>;
+第三项积分是无法减小的固有误差。</p>
+<h3 id="信息论">1.6 信息论</h3>
+<p>later 先不记了，感觉这部分太复杂，而且不太明白用途是什么</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/05/11/PRML-1/" data-id="cmal3bvv30000xil3faqk5pzq" data-title="PRML_1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/05/11/PRML-1/" data-id="cmc01geen0000t6s64zdneuf5" data-title="PRML_1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -140,6 +517,20 @@
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/2025/05/13/PRML-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          PRML_2
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
@@ -171,6 +562,14 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/05/19/PRML-8/">PRML_8</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/13/PRML-2/">PRML_2</a>
+          </li>
         
           <li>
             <a href="/2025/05/11/PRML-1/">PRML_1</a>

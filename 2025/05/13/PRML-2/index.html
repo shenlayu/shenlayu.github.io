@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<!-- MathJax support -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    }
+  };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>PRML_2 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="2. 概率分布 2.1 二元变量 伯努利分布，随机变量以概率 μ 取 1, 以 1 − μ 取 −1. Bern(x|μ) &#x3D; μx(1 − μ)1 − x 𝔼[x] &#x3D; μ,  var[x] &#x3D; μ(1 − μ) 似然函数为 $$ p(\mathcal{D}|\mu) &#x3D; \prod_{n&#x3D;1}^{N}p(x_n|\mu) &#x3D; \prod_{n&#x3D;1}^{N}\mu^{x_n}(1-\mu)^{">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PRML_2">
+<meta property="og:url" content="http://example.com/2025/05/13/PRML-2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="2. 概率分布 2.1 二元变量 伯努利分布，随机变量以概率 μ 取 1, 以 1 − μ 取 −1. Bern(x|μ) &#x3D; μx(1 − μ)1 − x 𝔼[x] &#x3D; μ,  var[x] &#x3D; μ(1 − μ) 似然函数为 $$ p(\mathcal{D}|\mu) &#x3D; \prod_{n&#x3D;1}^{N}p(x_n|\mu) &#x3D; \prod_{n&#x3D;1}^{N}\mu^{x_n}(1-\mu)^{">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/05/13/PRML-2/PRML-2_src/1.png">
+<meta property="og:image" content="http://example.com/2025/05/13/PRML-2/PRML-2_src/2.png">
+<meta property="article:published_time" content="2025-05-13T09:05:33.000Z">
+<meta property="article:modified_time" content="2025-06-12T13:18:46.500Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/05/13/PRML-2/PRML-2_src/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-PRML-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/05/13/PRML-2/" class="article-date">
+  <time class="dt-published" datetime="2025-05-13T09:05:33.000Z" itemprop="datePublished">2025-05-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      PRML_2
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="概率分布">2. 概率分布</h2>
+<h3 id="二元变量">2.1 二元变量</h3>
+<p>伯努利分布，随机变量以概率 <span
+class="math inline"><em>μ</em></span> 取 <span
+class="math inline">1</span>, 以 <span
+class="math inline">1 − <em>μ</em></span> 取 <span
+class="math inline">−1</span>. <span
+class="math display">Bern(<em>x</em>|<em>μ</em>) = <em>μ</em><sup><em>x</em></sup>(1 − <em>μ</em>)<sup>1 − <em>x</em></sup></span>
+<span
+class="math display">𝔼[<em>x</em>] = <em>μ</em>,  var[<em>x</em>] = <em>μ</em>(1 − <em>μ</em>)</span></p>
+<p>似然函数为 <span class="math display">$$
+p(\mathcal{D}|\mu) = \prod_{n=1}^{N}p(x_n|\mu) =
+\prod_{n=1}^{N}\mu^{x_n}(1-\mu)^{1-x_n}
+$$</span> 对数似然函数为 <span class="math display">$$
+\ln(\mathcal{D}|\mu) = \sum_{n=1}^{N}\ln p(x_n|\mu) =
+\sum_{n=1}^{N}\{x_n \ln\mu + (1-x_n)\ln(1-\mu)\}
+$$</span> 求导可得 <span class="math display">$$
+\mu_{ML} = \frac{1}{N}\sum_{n=1}^{N}x_n = \frac{m}{N}
+$$</span> 其中 <span class="math inline"><em>m</em></span> 为观测到
+<span class="math inline">1</span> 的次数。 可以验证 <span
+class="math display">𝔼[<em>m</em>] = <em>N</em><em>μ</em>, var[<em>m</em>] = <em>N</em><em>μ</em>(1 − <em>μ</em>)</span></p>
+<h4 id="beta-分布">2.1.1 Beta 分布</h4>
+<p>二项分布在小规模数据集上容易产生严重的过拟合。（例如观测到三次正例，就会预测
+<span class="math inline"><em>μ</em> = 1</span>,
+从而将所有输入判断为正例。）我们希望引入先验来抑制这一点。
+我们注意到伯努利分布的似然函数的形式是 <span
+class="math inline"><em>μ</em></span> 的幂指数和 <span
+class="math inline">1 − <em>μ</em></span>
+的幂指数的乘积，我们希望后验分布和先验分布
+<strong>在形式上是一致的</strong>（这称为共轭性）。因此我们将先验选择为
+Beta 分布 <span class="math display">$$
+\text{Beta}(\mu|a,b) =
+\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1}
+$$</span> 其中 <span class="math inline"><em>Γ</em>(<em>x</em>)</span>
+为保证归一化的 Gamma 函数 <span
+class="math display">∫<sub><em>a</em></sub><sup><em>b</em></sup>Beta(<em>μ</em>|<em>a</em>, <em>b</em>)<em>d</em><em>μ</em> = 1</span>
+Beta分布的均值和方差分别为 <span class="math display">$$
+\mathbb{E}[\mu] = \frac{a}{a+b}
+$$</span> <span class="math display">$$
+\text{var}[\mu] = \frac{ab}{(a+b)^{2}(a+b+1)}
+$$</span> 那么后验分布形式为 <span
+class="math display"><em>p</em>(<em>μ</em>|<em>a</em>, <em>b</em>, <em>m</em>, <em>l</em>) ∝ <em>μ</em><sup><em>m</em> + <em>a</em> − 1</sup>(1 − <em>μ</em>)<sup><em>n</em> + <em>b</em> − 1</sup></span>
+其中 <span
+class="math inline"><em>l</em> = <em>N</em> − <em>m</em></span>.</p>
+<p>后验的归一化系数很好表示 <span class="math display">$$
+p(\mu|a,b,m,l) =
+\frac{\Gamma(m+a+l+b)}{\Gamma(m+a)\Gamma(l+b)}\mu^{m+a-1}(1-\mu)^{n+b-1}
+$$</span> 这意味着从先验到后验，仅仅是 <span
+class="math inline"><em>a</em></span> 和 <span
+class="math inline"><em>b</em></span>
+的值的更新。从而我们可以很轻松地增量式地学习。</p>
+<p>如果我们的目标是根据观测到的数据集预测下一次的输出，那么预测的分布形式为
+<span class="math display">$$
+p(x=1|\mathcal{D}) = \int_{0}^{1}(x=1|\mu)p(\mu|\mathcal{D})d\mu =
+\int_{0}^{1}\mu p(\mu|\mathcal{D})d\mu = \mathcal{}E [\mu|\mathcal{D}] =
+\frac{m+1}{m+a+l+b}
+$$</span>
+当数据集规模趋于无穷大时，结果趋近最大似然估计的结果。一个普遍结论是，对于有限规模数据集，<strong>后验均值总在先验均值和最大似然估计之间</strong>。</p>
+<p><img src="./PRML-2_src/1.png" alt="不同超参数下 Beta 分布图像" />
+从图中可以看到，随着数据集的总规模不断增大，Beta
+分布峰值逐渐趋于尖锐。这揭示了另一个贝叶斯估计中的普遍现象，即
+<strong>后验方差倾向于小于先验方差</strong>，这说明随着学习的进行，模型的不确定性倾向于减小。
+上面的两条结论分别是因为我们有 <span
+class="math display">𝔼<sub><strong>θ</strong></sub>[<strong>θ</strong>] = 𝔼<sub>𝒟</sub>[𝔼<sub><strong>θ</strong></sub>[<strong>θ</strong>|𝒟]]</span>
+<span
+class="math display">var<sub><strong>θ</strong></sub>[<em>θ</em>] = 𝔼<sub>𝒟</sub>[var<sub><strong>θ</strong></sub>[<strong>θ</strong>|𝒟]] + var<sub>𝒟</sub>[𝔼<sub><strong>θ</strong></sub>[<strong>θ</strong>|𝒟]]</span>
+该式左侧是先验方差，右侧第一项是后验防差的期望，第二项是期望的方差。这表明后验方差的期望不大于先验方差（即使对于实际的后验防差可能大于先验方差）。</p>
+<h4 id="多项式变量">2.2 多项式变量</h4>
+<p>如果我们记 <span
+class="math inline"><strong>x</strong> = (<em>x</em><sub>1</sub>, …, <em>x</em><sub><em>K</em></sub>)</span>,
+其中 <span class="math inline">$\sum_{k=1}^{K}x_k=1$</span>, 并记 <span
+class="math inline"><em>x</em><sub><em>k</em></sub> = 1</span> 的概率为
+<span class="math inline"><em>μ</em><sub><em>k</em></sub></span>, 那么
+<span class="math inline"><strong>x</strong></span> 的分布就是 <span
+class="math display">$$
+p(\bm{x}|\bm{\mu}) = \prod_{k=1}^{K}\mu_{k}^{x_k}
+$$</span> 那么 <span
+class="math display">𝔼[<strong>x</strong>|<strong>μ</strong>] = ∑<sub><strong>x</strong></sub><em>p</em>(<strong>x</strong>|<strong>μ</strong>)<strong>x</strong> = (<em>μ</em><sub>1</sub>, …, <em>μ</em><sub><em>K</em></sub>)<sup><em>T</em></sup> = <strong>μ</strong></span>
+似然函数形式为 <span class="math display">$$
+p(\mathcal{D}|\bm{\mu}) = \prod_{n=1}^{N}\prod_{k=1}^{K}\mu_{k}^{x_{nk}}
+= \prod_{k=1}^{K}\mu_{k}^{\sum_{n}x_{nk}} = \prod_{j=1}^{K}\mu_{k}^{m_k}
+$$</span> 其中 <span
+class="math inline"><em>m</em><sub><em>k</em></sub></span> 为数据集中
+<span class="math inline"><em>x</em><sub><em>k</em></sub> = 1</span>
+的数据数量。</p>
+<p>我们求解 <span
+class="math inline"><em>μ</em><sub><em>k</em></sub></span>
+的最大似然解时需要使用拉格朗日数乘法，即最大化 <span
+class="math display">$$
+\sum_{k=1}^{K}m_{k}\ln \mu_{k} + \lambda
+\left(\sum_{k=1}^{K}\mu_k-1\right)
+$$</span> 令导数为 <span class="math inline">0</span>, 则 <span
+class="math display">$$
+\mu_{k} = -\frac{m_k}{\lambda}
+$$</span> 带入限制条件 <span
+class="math inline">$\sum_{k=1}^{K}\mu_k=1$</span>, 得到 <span
+class="math display">$$
+\mu_k = \frac{m_k}{N}
+$$</span> 表示 <span class="math inline"><em>N</em></span> 次观测中
+<span class="math inline"><em>x</em><sub><em>k</em></sub> = 1</span>
+的比例。 <img src="./PRML-2_src/2.png" alt="懒得打了" /></p>
+<h4 id="狄利克雷分布">2.2.1 狄利克雷分布</h4>
+<p>多项分布的共轭先验为 <span class="math display">$$
+p(\bm{\mu}|\bm{\alpha}) \propto \prod_{k=1}^{K}\mu_{k}^{\alpha_k-1}
+$$</span> 由于 <span class="math inline">$\sum_{k=1}^{K}\mu_k=1,
+\mu_k&gt;0$</span>, 故 <span
+class="math inline">{<em>μ</em><sub><em>k</em></sub>}</span>
+被限制在一个 <span class="math inline"><em>K</em> − 1</span>
+维单纯形中（即最小凸包，如线段，三角形，四面体）。
+归一化后，得到狄利克雷分布 <span class="math display">$$
+\text{Dir}(\bm{\mu}|\bm{\alpha}) =
+\frac{\Gamma(\alpha_0)}{\Gamma(\alpha_1)\dots\Gamma(\alpha_K)}\prod_{k=1}^{K}\mu_{k}^{\alpha_k-1}
+$$</span> 其中 <span class="math display">$$
+\alpha_0 = \sum_{k=1}^{K}\alpha_k
+$$</span> 则后验分布形式为 <span class="math display">$$
+p(\bm{\mu}|\mathcal{D},\bm{\alpha}) \propto
+p(\mathcal{D}|\bm{\mu})p(\bm{\mu}|\bm{\alpha}) \propto
+\prod_{k=1}^{K}\mu_{k}^{\alpha_k+m_k-1}
+$$</span> 归一化系数确定方式和 Beta 分布相同。</p>
+<h3 id="高斯分布">2.3 高斯分布</h3>
+<p>这是一个关于多元高斯分布的重要性质。让我解释为什么协方差矩阵Σ可以假设为对称矩阵。</p>
+<p>多元高斯分布的概率密度函数为：</p>
+<p><span class="math display">$$p(\mathbf{x}) =
+\frac{1}{(2\pi)^{k/2}|\mathbf{\Sigma}|^{1/2}}
+\exp\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^T
+\mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})\right)$$</span></p>
+<p>关键在于指数项中的二次型：<span
+class="math inline">(<strong>x</strong> − <strong>μ</strong>)<sup><em>T</em></sup><strong>Σ</strong><sup>−1</sup>(<strong>x</strong> − <strong>μ</strong>)</span></p>
+<p><strong>证明非对称项消失：</strong></p>
+<ol type="1">
+<li><p>任何矩阵都可以分解为对称部分和反对称部分： <span
+class="math display"><strong>Σ</strong><sup>−1</sup> = <strong>S</strong> + <strong>A</strong></span></p>
+<p>其中：</p>
+<ul>
+<li><span class="math inline">$\mathbf{S} =
+\frac{1}{2}(\mathbf{\Sigma}^{-1} + (\mathbf{\Sigma}^{-1})^T)$</span>
+是对称部分</li>
+<li><span class="math inline">$\mathbf{A} =
+\frac{1}{2}(\mathbf{\Sigma}^{-1} - (\mathbf{\Sigma}^{-1})^T)$</span>
+是反对称部分</li>
+</ul></li>
+<li><p>将二次型展开： <span
+class="math display">(<strong>x</strong> − <strong>μ</strong>)<sup><em>T</em></sup><strong>Σ</strong><sup>−1</sup>(<strong>x</strong> − <strong>μ</strong>) = (<strong>x</strong> − <strong>μ</strong>)<sup><em>T</em></sup><strong>S</strong>(<strong>x</strong> − <strong>μ</strong>) + (<strong>x</strong> − <strong>μ</strong>)<sup><em>T</em></sup><strong>A</strong>(<strong>x</strong> − <strong>μ</strong>)</span></p></li>
+<li><p>对于反对称矩阵<span
+class="math inline"><strong>A</strong></span>，有<span
+class="math inline"><strong>A</strong><sup><em>T</em></sup> = −<strong>A</strong></span>。考虑反对称部分的贡献：</p>
+<p>设<span
+class="math inline"><strong>v</strong> = <strong>x</strong> − <strong>μ</strong></span>，则<span
+class="math inline"><strong>v</strong><sup><em>T</em></sup><strong>A</strong><strong>v</strong></span>是一个标量。</p>
+<p>标量等于它的转置： <span
+class="math display">(<strong>v</strong><sup><em>T</em></sup><strong>A</strong><strong>v</strong>)<sup><em>T</em></sup> = <strong>v</strong><sup><em>T</em></sup><strong>A</strong><sup><em>T</em></sup><strong>v</strong> = <strong>v</strong><sup><em>T</em></sup>(−<strong>A</strong>)<strong>v</strong> = −<strong>v</strong><sup><em>T</em></sup><strong>A</strong><strong>v</strong></span></p></li>
+<li><p>因此：<span
+class="math inline"><strong>v</strong><sup><em>T</em></sup><strong>A</strong><strong>v</strong> = −<strong>v</strong><sup><em>T</em></sup><strong>A</strong><strong>v</strong></span></p>
+<p>这只有在<span
+class="math inline"><strong>v</strong><sup><em>T</em></sup><strong>A</strong><strong>v</strong> = 0</span>时才成立。</p></li>
+</ol>
+<p><strong>结论：</strong>
+反对称部分对二次型没有贡献，只有对称部分影响概率密度函数的值。因此，我们可以不失一般性地假设Σ是对称矩阵。实际上，在统计学中，协方差矩阵本身就定义为对称的，因为<span
+class="math inline">Cov(<em>X</em><sub><em>i</em></sub>, <em>X</em><sub><em>j</em></sub>) = Cov(<em>X</em><sub><em>j</em></sub>, <em>X</em><sub><em>i</em></sub>)</span>。</p>
+<p>这是实对称矩阵的<strong>谱分解定理</strong>（或特征值分解）的结果。让我解释为什么这个展开式成立。</p>
+<p><strong>谱分解定理：</strong></p>
+<p>对于任何 n×n 的实对称矩阵 Σ，都可以分解为： <span
+class="math display">$$\mathbf{\Sigma} = \sum_{i=1}^n \lambda_i
+\mathbf{u}_i \mathbf{u}_i^T$$</span></p>
+<p>其中： - <span
+class="math inline"><em>λ</em><sub><em>i</em></sub></span> 是 Σ 的特征值
+- <span
+class="math inline"><strong>u</strong><sub><em>i</em></sub></span>
+是对应的单位正交特征向量</p>
+<p><strong>证明过程：</strong></p>
+<ol type="1">
+<li><p><strong>构造正交矩阵</strong></p>
+<p>由于 Σ 是实对称矩阵，根据前面的证明，存在 n 个单位正交特征向量 <span
+class="math inline"><strong>u</strong><sub>1</sub>, <strong>u</strong><sub>2</sub>, ..., <strong>u</strong><sub><em>n</em></sub></span>。</p>
+<p>构造矩阵 <span
+class="math inline"><strong>U</strong> = [<strong>u</strong><sub>1</sub>|<strong>u</strong><sub>2</sub>|...|<strong>u</strong><sub><em>n</em></sub>]</span>，其中每个
+<span class="math inline"><strong>u</strong><sub><em>i</em></sub></span>
+是列向量。</p></li>
+<li><p><strong>正交矩阵的性质</strong></p>
+<p>由于特征向量单位正交，有：</p>
+<ul>
+<li><span
+class="math inline"><strong>u</strong><sub><em>i</em></sub><sup><em>T</em></sup><strong>u</strong><sub><em>j</em></sub> = <em>δ</em><sub><em>i</em><em>j</em></sub></span>
+（Kronecker delta）</li>
+<li><span
+class="math inline"><strong>U</strong><sup><em>T</em></sup><strong>U</strong> = <strong>I</strong></span>，即
+<span
+class="math inline"><strong>U</strong><sup><em>T</em></sup> = <strong>U</strong><sup>−1</sup></span></li>
+</ul></li>
+<li><p><strong>对角化</strong></p>
+<p>根据特征值定义：<span
+class="math inline"><strong>Σ</strong><strong>u</strong><sub><em>i</em></sub> = <em>λ</em><sub><em>i</em></sub><strong>u</strong><sub><em>i</em></sub></span></p>
+<p>可得：<span
+class="math inline"><strong>Σ</strong><strong>U</strong> = <strong>U</strong><strong>Λ</strong></span></p>
+<p>其中 <span
+class="math inline"><strong>Λ</strong> = diag(<em>λ</em><sub>1</sub>, <em>λ</em><sub>2</sub>, ..., <em>λ</em><sub><em>n</em></sub>)</span></p></li>
+<li><p><strong>求解 Σ</strong></p>
+<p>从 <span
+class="math inline"><strong>Σ</strong><strong>U</strong> = <strong>U</strong><strong>Λ</strong></span>
+得： <span
+class="math display"><strong>Σ</strong> = <strong>U</strong><strong>Λ</strong><strong>U</strong><sup><em>T</em></sup></span></p></li>
+<li><p><strong>展开矩阵乘法</strong></p>
+<p>将矩阵乘法展开： <span class="math display">$$\mathbf{\Sigma} =
+[\mathbf{u}_1 | \mathbf{u}_2 | ... | \mathbf{u}_n] \begin{bmatrix}
+\lambda_1 &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_n
+\end{bmatrix} \begin{bmatrix} \mathbf{u}_1^T \\ \vdots \\ \mathbf{u}_n^T
+\end{bmatrix}$$</span></p></li>
+<li><p><strong>得到最终形式</strong></p>
+<p>执行矩阵乘法： <span class="math display">$$\mathbf{\Sigma} =
+\lambda_1 \mathbf{u}_1 \mathbf{u}_1^T + \lambda_2 \mathbf{u}_2
+\mathbf{u}_2^T + ... + \lambda_n \mathbf{u}_n \mathbf{u}_n^T =
+\sum_{i=1}^n \lambda_i \mathbf{u}_i \mathbf{u}_i^T$$</span></p></li>
+</ol>
+<p><strong>几何意义：</strong></p>
+<ul>
+<li>每个 <span
+class="math inline"><strong>u</strong><sub><em>i</em></sub><strong>u</strong><sub><em>i</em></sub><sup><em>T</em></sup></span>
+是一个秩为1的投影矩阵，将向量投影到 <span
+class="math inline"><strong>u</strong><sub><em>i</em></sub></span>
+方向</li>
+<li><span class="math inline"><em>λ</em><sub><em>i</em></sub></span>
+是在该方向上的”强度”或方差</li>
+<li>整个分解表示 Σ 可以看作在各个正交方向上的加权投影之和</li>
+</ul>
+<p>这就是为什么协方差矩阵（或任何实对称矩阵）可以表示成这种特征向量展开的形式。如果是
+D 维空间且矩阵是满秩的，求和就从 1 到 D。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/05/13/PRML-2/" data-id="cmc01geeo0001t6s6cglm7lfg" data-title="PRML_2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/05/19/PRML-8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          PRML_8
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/05/11/PRML-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">PRML_1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">May 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/05/19/PRML-8/">PRML_8</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/13/PRML-2/">PRML_2</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/11/PRML-1/">PRML_1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
