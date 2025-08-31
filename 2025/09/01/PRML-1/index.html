@@ -1,0 +1,377 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>PRML-1 | Shenyu's Blog</title><meta name="author" content="shenyu"><meta name="copyright" content="shenyu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 绪论1.2 概率论概率的加法公式  p(X) &#x3D; \sum_{Y} (X,Y)概率的乘法公式  p(X,Y) &#x3D; p(Y|X)p(X)贝叶斯公式  p(Y|X) &#x3D; \frac{p(X|Y)p(Y)}{p(X)} &#x3D; \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)}1.2.1 概率密度考虑 $x &#x3D; g(y)$, 那么 $p_{x}(x)\delta x ≃ p_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PRML-1">
+<meta property="og:url" content="http://shenlayu.github.io/2025/09/01/PRML-1/index.html">
+<meta property="og:site_name" content="Shenyu&#39;s Blog">
+<meta property="og:description" content="1. 绪论1.2 概率论概率的加法公式  p(X) &#x3D; \sum_{Y} (X,Y)概率的乘法公式  p(X,Y) &#x3D; p(Y|X)p(X)贝叶斯公式  p(Y|X) &#x3D; \frac{p(X|Y)p(Y)}{p(X)} &#x3D; \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)}1.2.1 概率密度考虑 $x &#x3D; g(y)$, 那么 $p_{x}(x)\delta x ≃ p_">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://shenlayu.github.io/img/avatar.png">
+<meta property="article:published_time" content="2025-08-31T16:33:35.000Z">
+<meta property="article:modified_time" content="2025-08-31T16:59:54.025Z">
+<meta property="article:author" content="shenyu">
+<meta property="article:tag" content="PRML 笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://shenlayu.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "PRML-1",
+  "url": "http://shenlayu.github.io/2025/09/01/PRML-1/",
+  "image": "http://shenlayu.github.io/img/avatar.png",
+  "datePublished": "2025-08-31T16:33:35.000Z",
+  "dateModified": "2025-08-31T16:59:54.025Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "shenyu",
+      "url": "http://shenlayu.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://shenlayu.github.io/2025/09/01/PRML-1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'PRML-1',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/banner.png);"></div><div class="post type-article" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Shenyu's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">PRML-1</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">PRML-1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-08-31T16:33:35.000Z" title="Created 2025-09-01 00:33:35">2025-09-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-31T16:59:54.025Z" title="Updated 2025-09-01 00:59:54">2025-09-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/PRML-%E7%AC%94%E8%AE%B0/">PRML 笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1. 绪论"></a>1. 绪论</h1><h2 id="1-2-概率论"><a href="#1-2-概率论" class="headerlink" title="1.2 概率论"></a>1.2 概率论</h2><p>概率的加法公式</p>
+<script type="math/tex; mode=display">
+p(X) = \sum_{Y} (X,Y)</script><p>概率的乘法公式</p>
+<script type="math/tex; mode=display">
+p(X,Y) = p(Y|X)p(X)</script><p>贝叶斯公式</p>
+<script type="math/tex; mode=display">
+p(Y|X) = \frac{p(X|Y)p(Y)}{p(X)} = \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)}</script><h3 id="1-2-1-概率密度"><a href="#1-2-1-概率密度" class="headerlink" title="1.2.1 概率密度"></a>1.2.1 概率密度</h3><p>考虑 $x = g(y)$, 那么 $p_{x}(x)\delta x ≃ p_{y}(y)\delta y$. 从而有：</p>
+<script type="math/tex; mode=display">
+p_{y}(y) = p_{x}(x)|\frac{dy}{dx}| = p_{x}(g(y))|g^{\prime}(y)|</script><p>这里 $p_{x}, p_{y}$ 可以理解为针对随机变量 $x,y$ 的概率密度函数。</p>
+<p>连续形式的加法公式</p>
+<script type="math/tex; mode=display">
+p(x) = \int p(x,y) dy</script><p>连续形式的乘法公式</p>
+<script type="math/tex; mode=display">
+p(x,y) = p(y|x)p(x)</script><h3 id="1-2-2-期望和协方差"><a href="#1-2-2-期望和协方差" class="headerlink" title="1.2.2 期望和协方差"></a>1.2.2 期望和协方差</h3><p>离散和连续形式期望分别定义为：</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[f] = \sum_{x}p(x)f(x)</script><script type="math/tex; mode=display">
+\mathbb{E}[f] = \int p(x)f(x)dx</script><p>两种形式下，期望都可以通过采样估计：</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[f] ≃ \frac{1}{N} \sum_{n=1}^{N} f(x_n)</script><p>多变量函数期望中，可以通过下标指定被平均的是哪个变量。例如下式是关于 $y$ 的函数</p>
+<script type="math/tex; mode=display">
+\mathbb{E}_{x}[f(x,y)]</script><p>方差定义为</p>
+<script type="math/tex; mode=display">
+\text{var}[f] = \mathbb{E}[(f(x)-\mathbb{E}[f(x)])^2] = \mathbb{E}[f(x)^2] - \mathbb{E}[f(x)]^2</script><p>变量自身方差</p>
+<script type="math/tex; mode=display">
+\text{var}[x] = \mathbb{E}[x^2] - \mathbb{E}[x]^2</script><p>变量 $x$, $y$ 的协方差定义为</p>
+<script type="math/tex; mode=display">
+\text{cov}[x,y] = \mathbb{E}_{x,y}[\{x-\mathbb{E}[x]\}\{y-\mathbb{E}[y]\}] = \mathbb{E}_{x,y}[xy]-\mathbb{E}[x]\mathbb{E}[y]</script><p>它表⽰在多⼤程度上 $x$ 和 $y$ 会共同变化。如果x和y相互独⽴，那么它们的协⽅差为0。</p>
+<p>在两个随机向量 $\boldsymbol{}{x}$ 和 $\boldsymbol{}{y}$ 的情形下，协⽅差是⼀个矩阵</p>
+<script type="math/tex; mode=display">
+\text{cov}[\boldsymbol{}{x},\boldsymbol{}{y}] = \mathbb{E}_{\boldsymbol{}{x},\boldsymbol{}{y}}[\{\boldsymbol{}{x}-\mathbb{E}[\boldsymbol{}{x}]\}\{\boldsymbol{}{y}^{T}-\mathbb{E}[\boldsymbol{}{y}]^{T}\}] = \mathbb{E}_{\boldsymbol{}{x},\boldsymbol{}{y}}[\boldsymbol{}{x}\boldsymbol{}{y}^{T}]-\mathbb{E}[\boldsymbol{}{x}]\mathbb{E}[\boldsymbol{}{y}^{T}]</script><p>考虑 $\boldsymbol{x}$ 各个分量的协方差时，记号可以简化</p>
+<script type="math/tex; mode=display">
+\text{cov}[\boldsymbol{}{x}] ≡ \text{cov}[\boldsymbol{}{x},\boldsymbol{}{x}]</script><h3 id="1-2-3-贝叶斯概率"><a href="#1-2-3-贝叶斯概率" class="headerlink" title="1.2.3 贝叶斯概率"></a>1.2.3 贝叶斯概率</h3><p>贝叶斯公式的一个实际意义是，在观测到结果 $\mathcal{D}$ 前，我们对模型参数 $\boldsymbol{}{w}$ 有一个先验估计 $P(\boldsymbol{}{w})$, 观测数据的效果则可以贝叶斯公式表示</p>
+<script type="math/tex; mode=display">
+p(\boldsymbol{}{w}|\mathcal{D}) = \frac{p(\mathcal{D}|\boldsymbol{}{w})p(\boldsymbol{}{w})}{p(\mathcal{D})}</script><p>我们可以用自然语言描述贝叶斯定理</p>
+<script type="math/tex; mode=display">
+\text{posterior} \propto \text{likelihood} \times \text{prior}</script><p>对上面的贝叶斯公式两边同时积分得到</p>
+<script type="math/tex; mode=display">
+p(\mathcal{D}) = \int p(\mathcal{D}|\boldsymbol{}{w})p(\boldsymbol{}{w}) d\boldsymbol{}{w}</script><p>$p(\mathcal{D}|\boldsymbol{}{w})$ 由结果 $\mathcal{D}$ 来确定，可以看作关于 $\boldsymbol{}{w}$ 的函数。注意：似然函数不是 $\boldsymbol{}{w}$ 的概率分布，并且它关于 $\boldsymbol{}{w}$ 的积分并不（⼀定）等于1。</p>
+<p>贝叶斯观点的⼀个优点是对先验概率的包含是很⾃然的事情。</p>
+<h3 id="1-2-4-高斯分布"><a href="#1-2-4-高斯分布" class="headerlink" title="1.2.4 高斯分布"></a>1.2.4 高斯分布</h3><p>一元和多元高斯分布的定义分别为</p>
+<script type="math/tex; mode=display">
+\mathcal{N}(x|\mu, \sigma^2) = \frac{1}{(2\pi\sigma^2)^{\frac{1}{2}}}\exp(-\frac{1}{2\sigma^{2}}(x-\mu)^{2})</script><script type="math/tex; mode=display">
+\mathcal{N}(\boldsymbol{}{x}|\boldsymbol{}{\mu}, \boldsymbol{}{\sigma}^2) = \frac{1}{(2\pi)^{\frac{D}{2}}}\frac{1}{|\Sigma|^{\frac{1}{2}}}\exp(-\frac{1}{2}(\boldsymbol{}{x}-\boldsymbol{}{\mu})^{T}\Sigma^{-1}(\boldsymbol{}{x}-\boldsymbol{}{\mu}))</script><p>我们从均值 $\mu$, 方差 $\sigma^{2}$ 的高斯分布中独立同分布地获取 $N$ 次观测，记为 $\mathbf{x} = \{x_1, \dots, x_N\}^{T}$. 我们已经看到两个独⽴事件的联合概率可以由各个事件的边缘概率的乘积得到。由于我们的数据集 $\mathbf{x}$ 是独⽴同分布的，因此给定 $\mu$ 和 $\sigma^2$, 我们可以给出数据集的概率，同时也是似然函数，为</p>
+<script type="math/tex; mode=display">
+p(\mathbf{x}|\mu, \sigma^2) = \prod_{n=1}^{N} \mathcal{N}(x_n|\mu,\sigma^{2})</script><p>对数似然函数为</p>
+<script type="math/tex; mode=display">
+\ln p(\mathbf{x}|\mu, \sigma^2) = -\frac{1}{2\sigma^2}\sum_{n=1}^{N}(x_n-\mu)^{2} - \frac{N}{2}\ln\sigma^2 - \frac{N}{2}\ln(2\pi)</script><p>对 $\mu$ 求导，得到 $\mu$ 的最大似然解</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\frac{\partial p(\mathbf{x}|\mu, \sigma^2)}{\partial \mu} &= \frac{\partial (-\frac{1}{2\sigma^2}\sum_{n=1}^{N}(x_n-\mu)^{2})}{\partial \mu}  \notag \\
+&= -\frac{1}{2\sigma^2}\sum_{n=1}^{N}(-2(x_n-\mu)) \\
+&= \frac{\sum_{n=1}^{N}(x_n-\mu)}{\sigma^2}
+\end{aligned} 
+\end{equation}</script><script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\frac{\sum_{n=1}^{N}(x_n-\mu_{ML})}{\sigma^2} &= 0 \notag \\
+\mu_{ML} &= \frac{1}{N}\sum_{n=1}^{N}x_n
+\end{aligned} 
+\end{equation}</script><p>同理，对 $\sigma^2$ 求导，得到 $\sigma^2$ 的最大似然解</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\frac{\partial p(\mathbf{x}|\mu, \sigma^2)}{\partial \sigma^2} &= \frac{\partial (-\frac{1}{2\sigma^2}\sum_{n=1}^{N}(x_n-\mu)^{2}-\frac{N}{2}\ln\sigma^2)}{\partial \sigma^2} \notag \\
+&= \frac{\sum_{n=1}^{N}(x_n-\mu)^{2}}{2\sigma^3} - \frac{N}{2\sigma}
+\end{aligned} 
+\end{equation}</script><script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\frac{\sum_{n=1}^{N}(x_n-\mu)^{2}}{2\sigma^3} - \frac{N}{2\sigma} &= 0 \notag \\
+\sigma_{ML}^2 &= \frac{\sum_{n=1}^{N}(x_n-\mu)^{2}}{N}
+\end{aligned} 
+\end{equation}</script><p>用 $\mu$ 的最大似然解 $\mu_{ML}$ 替代 $\mu$, 得到</p>
+<script type="math/tex; mode=display">
+\sigma_{ML}^2 = \frac{\sum_{n=1}^{N}(x_n-\mu_{ML})^{2}}{N}</script><p>$\mu_{ML}$ 显然是 $\mu$ 的无偏估计；但由于我们在计算 $\sigma^{2}$ 时使用 $\mu_{ML}$ 替代了 $\mu$, 因此 $\sigma_{ML}^2$ 对 $\sigma^{2}$ 的估计是有偏的。</p>
+<script type="math/tex; mode=display">
+\mathbf{E}(\mu_{ML}) = \mu, \quad \mathbf{E}[\sigma_{ML}^2] = (\frac{N-1}{N})\sigma^2</script><p>可以使用方差的无偏估计</p>
+<script type="math/tex; mode=display">
+\widetilde{\sigma}^{2} = \frac{N}{N-1}\sigma_{ML}^{2} = \frac{1}{N-1}\sum_{n=1}^{N}(x_n-\mu_{ML})^{2}</script><p><img src="1.png" alt="方差估计有偏"></p>
+<h3 id="1-2-5-重新考察曲线拟合问题"><a href="#1-2-5-重新考察曲线拟合问题" class="headerlink" title="1.2.5 重新考察曲线拟合问题"></a>1.2.5 重新考察曲线拟合问题</h3><p>曲线拟合的任务目标是根据 $N$ 个输入 $\mathbf{x}=\{x_1,\dots,x_N\}^{T}$ 和对应的目标值 $\mathbf{t}=\{t_1,\dots,t_N\}^{T}$, 在给出输入变量的新值 $x$ 的情况下，对目标变量 $t$ 进行预测。<strong>我们假定给定 $x$ 的值，对应的 $t$ 值服从高斯分布。</strong> 那么有</p>
+<script type="math/tex; mode=display">
+p(t|x,\boldsymbol{}{w},\beta) = \mathcal{N}(t|y(x,\boldsymbol{}{w}),\beta^{-1})</script><p>其中 $\beta$ 表示精度参数，衡量方差。</p>
+<p>已有数据 $\{\mathbf{x},\mathbf{t}\}$ 的似然函数为</p>
+<script type="math/tex; mode=display">
+p(\mathbf{t}|\mathbf{x},\boldsymbol{}{w},\beta) = \prod_{n=1}^{N}\mathcal{N}(t_n|y(x_n,\boldsymbol{}{w}),\beta^{-1})</script><p>对数似然函数为</p>
+<script type="math/tex; mode=display">
+\ln p(\mathbf{t}|\mathbf{x},\boldsymbol{}{w}, \beta) = -\frac{\beta}{2}\sum_{n=1}^{N}(y(x_n,\boldsymbol{}{w})-t_n)^{2} + \frac{N}{2}\ln\beta - \frac{N}{2}\ln(2\pi)</script><p>考虑 $\boldsymbol{}{w}$ 的最大似然解时，首先忽略等式右侧的后两项，而后将 $\frac{\beta}{2}$ 替换为 $\frac{1}{2}$ (因为这不影响最大值出现位置)，最后将“最大化对数似然函数”替换为“最小化负对数似然函数”，<strong>我们就得到了平方误差损失函数。</strong> 这里不能像计算 $\mu_{ML}$ 一样计算 $\boldsymbol{}{w}_{ML}$ 的解析解，因为我们无法计算 $y$ 对 $\boldsymbol{}{w}$ 的导数。</p>
+<p>可以依靠 $\boldsymbol{}{w}_{ML}$ 计算 $\beta_{ML}$ 的最大似然解</p>
+<script type="math/tex; mode=display">
+\frac{1}{\beta_{ML}} = \frac{1}{N}\sum_{n=1}^{N}\{y(x_n,\boldsymbol{}{w}_{ML})-t_n\}^2</script><p>考虑引入 $\boldsymbol{}{w}$ 上的先验分布，以一个多元高斯分布为例。</p>
+<script type="math/tex; mode=display">
+p(\boldsymbol{}{w}|\alpha) = \mathcal(\boldsymbol{}{w}|\boldsymbol{}{0},\alpha^{-1}\boldsymbol{}{I}) = (\frac{\alpha}{2\pi})^{\frac{M+1}{2}}\exp(-\frac{\alpha}{2}\boldsymbol{}{w}^{T}\boldsymbol{}{w})</script><p>相当于一个各方向 scaling 均为 $\alpha^{-1}$, rotation 为单位矩阵的单位球高斯分布。$M$ 为 $\boldsymbol{}{w}$ (作为多项式函数的系数) 的最高次数。$M+1$ 为 $\boldsymbol{}{w}$ 的维度。</p>
+<p>我们可以得到如下关于 $\boldsymbol{}{w}$ 的贝叶斯公式</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+p(\boldsymbol{}{w}|\alpha, \beta, \mathbf{x},\mathbf{t}) &= p(\alpha,\beta,\mathbf{x},\mathbf{t}|\boldsymbol{}{w})p(\boldsymbol{}{w}) \notag \\
+&= p(t|\mathbf{x},\alpha.\beta,\boldsymbol{}{w})p(\mathbf{x},\alpha,\beta|\boldsymbol{}{w})p(\boldsymbol{}{w}) \\
+&= p(t|\mathbf{x},\beta,\boldsymbol{}{w})p(\mathbf{x},\alpha,\beta)p(\boldsymbol{}{w}|\alpha) \\
+&\propto p(t|\mathbf{x},\beta,\boldsymbol{}{w})p(\boldsymbol{}{w}|\alpha)
+\end{aligned} 
+\end{equation}</script><p>这称为最大后验 (MAP)。最大化后验概率时，通过最小化负对数后验，等价于最小化下式</p>
+<script type="math/tex; mode=display">
+\frac{\beta}{2}\sum_{n=1}^{N}(y(x_n,\boldsymbol{}{w})-t_n)^{2} + \frac{\alpha}{2}\boldsymbol{}{w}^{T}\boldsymbol{}{w}</script><p>这等价使用于 L2 正则项的平方误差损失函数。</p>
+<h3 id="1-2-6-贝叶斯曲线拟合"><a href="#1-2-6-贝叶斯曲线拟合" class="headerlink" title="1.2.6 贝叶斯曲线拟合"></a>1.2.6 贝叶斯曲线拟合</h3><p>later</p>
+<h2 id="1-5-决策论"><a href="#1-5-决策论" class="headerlink" title="1.5 决策论"></a>1.5 决策论</h2><p>决策论可以看作概率论的下一步。当概率论给出不确定性后，我们需要一套理论来根据不确定性选出最优的决定。</p>
+<p>记 $\boldsymbol{}{x}$ 为我们遇到的情形, $\mathcal{C}_k$ 为我们可以做出的第 $k$ 个决策类。那么</p>
+<script type="math/tex; mode=display">
+p(\mathcal{C}_{k}|\boldsymbol{}{x}) = \frac{p(\boldsymbol{}{x}|\mathcal{C}_k)p(\mathcal{C}_k)}{p(\boldsymbol{}{x})}</script><p>那么如果我们的⽬标是最⼩化把 $x$ 分到错误类别中的可能性，那么我们要选择有最⼤后验概率的类别。</p>
+<h3 id="1-5-1-最⼩化错误分类率"><a href="#1-5-1-最⼩化错误分类率" class="headerlink" title="1.5.1 最⼩化错误分类率"></a>1.5.1 最⼩化错误分类率</h3><p>我们需要给每一个决策类别划分一个决策区域 $\mathcal{R}_k$. 考虑两个决策类的情形，那么我们犯错误的概率为</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+p(\text{mistake}) &= p(\boldsymbol{}{x}\in \mathcal{R}_1,\mathcal{C}_2) + p(\boldsymbol{}{x}\in \mathcal{R}_2,\mathcal{C}_1) \notag \\
+&= \int_{\mathcal{R}_1}p(\boldsymbol{}{x},\mathcal{C}_2)d{\boldsymbol{}{x}} + \int_{\mathcal{R}_2}p(\boldsymbol{}{x},\mathcal{C}_1)d{\boldsymbol{}{x}} 
+\end{aligned} 
+\end{equation}</script><p>那么显然，为了使 $p(\text{mistake})$ 尽量小，我们要将 $\boldsymbol{}{x} 划分到 $ $p(\boldsymbol{}{x}|\mathcal{C}_k)$ 这一后验概率尽量大的类别。</p>
+<p>最大化正确分类概率同理</p>
+<script type="math/tex; mode=display">
+p(\text{correct}) = \sum_{k=1}^{K}p(x\in\mathcal{R}_k,\mathcal{C}_k) = \sum_{k=1}^{K}\int_{\mathcal{R}_k}p(\boldsymbol{}{x},\mathcal{C}_k)d\boldsymbol{}{x}</script><h3 id="1-5-2-最小化期望损失"><a href="#1-5-2-最小化期望损失" class="headerlink" title="1.5.2 最小化期望损失"></a>1.5.2 最小化期望损失</h3><p>有时做出不同错误决策的代价可能不一致，又一些错误决策的代价会明显高于另一些，这时我们可以使用 <strong>损失函数</strong> 来衡量不同错误决策的代价大小，并借此尽量规避代价更大的错误决策。我们要最小化平均损失，其定义为</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[L] = \sum_{k}\sum_{j}\int_{\mathcal{R}_j}L_{kj}p(\boldsymbol{}{x},\mathcal{C}_k)d\boldsymbol{}{x}</script><p>我们的目标是对于每个可能的 $\boldsymbol{}{x}$, 选择 $\mathcal{R}_j$ 来使平均损失最小，相当于选择 $\mathcal{R}_j$ 最小化</p>
+<script type="math/tex; mode=display">
+\sum_{k}L_{kj}p(\mathcal{C_k}|\boldsymbol{}{x})</script><h3 id="1-5-3-拒绝选项"><a href="#1-5-3-拒绝选项" class="headerlink" title="1.5.3 拒绝选项"></a>1.5.3 拒绝选项</h3><p>值得一提的是，</p>
+<script type="math/tex; mode=display">
+\sum_{k} p(\mathcal{C}_k|\boldsymbol{}{x}) = 1</script><p>有时我们不希望在最大的 $p(\mathcal{C}_k|\boldsymbol{}{x})$ 比较小时仍然做出决策，而是希望此时避免进行决策，因此可以选择一个 $\theta\in[0,1]$, 在 $\max_{k}p(\mathcal{C}_k|\boldsymbol{}{x})\leq\theta$ 时拒绝输入 $\boldsymbol{}{x}$. 其很容易扩展到包含损失函数的情形。</p>
+<h3 id="1-5-4-推断和决策"><a href="#1-5-4-推断和决策" class="headerlink" title="1.5.4 推断和决策"></a>1.5.4 推断和决策</h3><p>我们有三种方法解决决策问题，由复杂到简单分别如下</p>
+<ol>
+<li>作为一个推断问题，首先确定 $p(\boldsymbol{}{x}|\mathcal{C}_k)$, 并推断先验概率 $p(\mathcal{C}_k)$, 而后通过贝叶斯定理计算后验概率分布；或者直接对联合概率分布 $p(\boldsymbol{}{x}, \mathcal{C}_k)$ 进行建模。这称为 <strong>生成式模型</strong>, 因为我们可以直接通过采样来 <strong>生成新样本</strong>。</li>
+<li>首先通过已有样本对后验概率 $p(\mathcal{C}_k|\boldsymbol{}{x})$ 进行建模学习，然后对新样本进行分类。这称为 <strong>判别式模型</strong>。</li>
+<li>找到一个判别函数直接根据输出生成判别的类别。该情况下，概率不起作用。（例如 SVM）</li>
+</ol>
+<p>(c) 无法建模后验概率，而我们有许多理由需要后验概率，例如拒绝选项，又例如有时我们有多个条件独立的指标 $\boldsymbol{}{x}_i$, 我们希望联合地进行决策。</p>
+<p>(a) 所代表的生成式模型无疑是可以进行决策的，例如 Diffusion Model is Secretly a Zero-Shot Classifier, 但是如果我们只想进行决策，它会严重浪费资源。因为由于 $\boldsymbol{}{x}$ 的维度很高，我们需要大量数据才能确定出类的条件概率密度。另外，类的条件密度（似然函数）可能包含许多对后验概率几乎没有影响的结构（例如概率密度的峰值位置），而如果我们要建模先验分布，这些必需考虑在内。</p>
+<p><img src="2.png" alt="先验分布的冗余结构"></p>
+<h3 id="1-5-5-回归问题的损失函数"><a href="#1-5-5-回归问题的损失函数" class="headerlink" title="1.5.5 回归问题的损失函数"></a>1.5.5 回归问题的损失函数</h3><p>对于每个输入 $\boldsymbol{}{x}$, 选择一个对 $t$ 值的估计 $y(\boldsymbol{}{x})$, 造成一个损失 $L(t,y(\boldsymbol{}{x}))$. 那么期望损失是</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[L] = \int\int L(t,y(\boldsymbol{}{x}))p(\boldsymbol{}{x},t)d\boldsymbol{}{x}dt</script><p>当我们选择平方损失时，</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[L] = \int\int (t-y(\boldsymbol{}{x}))^{2}p(\boldsymbol{}{x},t)d\boldsymbol{}{x}dt</script><p>这里最小化 $\mathbf{E}[L]$ 的方式没看懂，但还有另一种：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\{y(\boldsymbol{}{x})-t\}^2 &= \{y(\boldsymbol{}{x}) − \mathbb{E}[t | \boldsymbol{}{x}] + \mathbb{E}[t | \boldsymbol{}{x}] − t\}^2 \notag \\
+&= \{y(x) − \mathbb{E}[t | \boldsymbol{}{x}]\}^2 + 2\{y(\boldsymbol{}{x}) − \mathbb{E}[t | \boldsymbol{}{x}]\}\{\mathbb{E}[t | \boldsymbol{}{x}] − t\} + \{\mathbb{E}[t | \boldsymbol{}{x}] − t\}^2 \\
+\end{aligned} 
+\end{equation}</script><p>对第一项积分</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\int \int \{y(\boldsymbol{}{x}) − \mathbb{E}[t | \boldsymbol{}{x}]\}^2 p(\boldsymbol{}{x},t)d\boldsymbol{}{x}dt &= \int \{y(x) − \mathbb{E}[t | \boldsymbol{}{x}]\}^2 \left(\int p(\boldsymbol{}{x},t)dt\right)d\boldsymbol{}{x}  \notag \\
+&= \int \{y(x) − \mathbb{E}[t | \boldsymbol{}{x}]\}^2 p(\boldsymbol{}{x})d\boldsymbol{}{x}
+\end{aligned} 
+\end{equation}</script><p>对第二项积分</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\int \int 2\{y(\boldsymbol{}{x}) − \mathbb{E}[t | \boldsymbol{}{x}]\}\{\mathbb{E}[t | \boldsymbol{}{x}] − t\}p(\boldsymbol{}{x},t)d\boldsymbol{}{x}dt &=  \int 2\{y(\boldsymbol{}{x}) − \mathbb{E}[t | \boldsymbol{}{x}]\}p(\boldsymbol{}{x}) \left( \int \{\mathbb{E}[t | \boldsymbol{}{x}] − t\}p(t|\boldsymbol{}{x}) dt \right) d\boldsymbol{}{x} \notag \\
+\end{aligned} 
+\end{equation}</script><p>这里 $\int \mathbb{E}[t|\boldsymbol{}{x}]p(t|\boldsymbol{}{x})dt = \mathbb{E}[t|\boldsymbol{}{x}]\int p(t|\boldsymbol{}{x})dt = \mathbb{E}[t|\boldsymbol{}{x}]$, $\int t p(t|\boldsymbol{}{x})dt = \mathbb{E}[t|\boldsymbol{}{x}]$, 故内层积分为 $0$, 从而第二项积分值为0.</p>
+<p>对第三项积分，首先我们有</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[f(\boldsymbol{}{x},t)|\boldsymbol{}{x}] = \int f(\boldsymbol{}{x},t)p(t|\boldsymbol{}{x})d\boldsymbol{}{x}</script><p>从而</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\int \int \{\mathbb{E}[t | \boldsymbol{}{x}] − t\}^2p(\boldsymbol{}{x},t)d\boldsymbol{}{x}dt &= \int p(\boldsymbol{}{x})\left(\int \{\mathbb{E}[t | \boldsymbol{}{x}] − t\}^2 p(t|\boldsymbol{}{x})dt\right)  \notag \\
+&= \int \text{var}[t|\boldsymbol{}{x}]p(\boldsymbol{}{x})d\boldsymbol{}{x}
+\end{aligned} 
+\end{equation}</script><p>这里为了最小化第一项的积分，我们需要使 $y(\boldsymbol{}{x}) = \mathbb{E}[t|\boldsymbol{}{x}]$; 第三项积分是无法减小的固有误差。</p>
+<h2 id="1-6-信息论"><a href="#1-6-信息论" class="headerlink" title="1.6 信息论"></a>1.6 信息论</h2><p>later 先不记了，感觉这部分太复杂，而且不太明白用途是什么</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://shenlayu.github.io">shenyu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://shenlayu.github.io/2025/09/01/PRML-1/">http://shenlayu.github.io/2025/09/01/PRML-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PRML-%E7%AC%94%E8%AE%B0/">PRML 笔记</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">shenyu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">1</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shenlayu"><i class="fab fa-github"></i><span>My Github</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome to my blog!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E7%BB%AA%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">1. 绪论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%A6%82%E7%8E%87%E8%AE%BA"><span class="toc-number">1.1.</span> <span class="toc-text">1.2 概率论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.2.1 概率密度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E6%9C%9F%E6%9C%9B%E5%92%8C%E5%8D%8F%E6%96%B9%E5%B7%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2.2 期望和协方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%A6%82%E7%8E%87"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.2.3 贝叶斯概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-4-%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.2.4 高斯分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-5-%E9%87%8D%E6%96%B0%E8%80%83%E5%AF%9F%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.2.5 重新考察曲线拟合问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-6-%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88"><span class="toc-number">1.1.6.</span> <span class="toc-text">1.2.6 贝叶斯曲线拟合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E5%86%B3%E7%AD%96%E8%AE%BA"><span class="toc-number">1.2.</span> <span class="toc-text">1.5 决策论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-1-%E6%9C%80%E2%BC%A9%E5%8C%96%E9%94%99%E8%AF%AF%E5%88%86%E7%B1%BB%E7%8E%87"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.5.1 最⼩化错误分类率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-2-%E6%9C%80%E5%B0%8F%E5%8C%96%E6%9C%9F%E6%9C%9B%E6%8D%9F%E5%A4%B1"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.5.2 最小化期望损失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-3-%E6%8B%92%E7%BB%9D%E9%80%89%E9%A1%B9"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.5.3 拒绝选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-4-%E6%8E%A8%E6%96%AD%E5%92%8C%E5%86%B3%E7%AD%96"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.5.4 推断和决策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-5-%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.5.</span> <span class="toc-text">1.5.5 回归问题的损失函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-%E4%BF%A1%E6%81%AF%E8%AE%BA"><span class="toc-number">1.3.</span> <span class="toc-text">1.6 信息论</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/01/PRML-1/" title="PRML-1">PRML-1</a><time datetime="2025-08-31T16:33:35.000Z" title="Created 2025-09-01 00:33:35">2025-09-01</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By shenyu</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'all',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
