@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>统计学习导论笔记-1 | Shenyu's Blog</title><meta name="author" content="shenyu"><meta name="copyright" content="shenyu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="朴素最小二乘法问题定义从数据分布 $\mathcal{D}$ 中观测到一组样本 $(\boldsymbol{x}_1,y_1), \dots, (\boldsymbol{x_n},y_n)$, 其中 $\boldsymbol{x}_i &#x3D; (x_{i1},\dots,x_{ip})$, $y_i\in \mathbb{R}$. 假定 $y_i &#x3D; f(\boldsymbol{x}_i)+\epsi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计学习导论笔记-1">
+<meta property="og:url" content="http://shenlayu.github.io/2025/09/19/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-1/index.html">
+<meta property="og:site_name" content="Shenyu&#39;s Blog">
+<meta property="og:description" content="朴素最小二乘法问题定义从数据分布 $\mathcal{D}$ 中观测到一组样本 $(\boldsymbol{x}_1,y_1), \dots, (\boldsymbol{x_n},y_n)$, 其中 $\boldsymbol{x}_i &#x3D; (x_{i1},\dots,x_{ip})$, $y_i\in \mathbb{R}$. 假定 $y_i &#x3D; f(\boldsymbol{x}_i)+\epsi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://shenlayu.github.io/img/avatar.png">
+<meta property="article:published_time" content="2025-09-19T10:37:54.000Z">
+<meta property="article:modified_time" content="2025-09-22T03:55:37.057Z">
+<meta property="article:author" content="shenyu">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="课程笔记">
+<meta property="article:tag" content="统计学习导论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://shenlayu.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "统计学习导论笔记-1",
+  "url": "http://shenlayu.github.io/2025/09/19/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-1/",
+  "image": "http://shenlayu.github.io/img/avatar.png",
+  "datePublished": "2025-09-19T10:37:54.000Z",
+  "dateModified": "2025-09-22T03:55:37.057Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "shenyu",
+      "url": "http://shenlayu.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://shenlayu.github.io/2025/09/19/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '统计学习导论笔记-1',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/banner.png);"></div><div class="post type-article" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Shenyu's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">统计学习导论笔记-1</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">统计学习导论笔记-1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-09-19T10:37:54.000Z" title="Created 2025-09-19 18:37:54">2025-09-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-09-22T03:55:37.057Z" title="Updated 2025-09-22 11:55:37">2025-09-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="朴素最小二乘法"><a href="#朴素最小二乘法" class="headerlink" title="朴素最小二乘法"></a>朴素最小二乘法</h1><h2 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h2><p>从数据分布 $\mathcal{D}$ 中观测到一组样本 $(\boldsymbol{x}_1,y_1), \dots, (\boldsymbol{x_n},y_n)$, 其中 $\boldsymbol{x}_i = (x_{i1},\dots,x_{ip})$, $y_i\in \mathbb{R}$. 假定 $y_i = f(\boldsymbol{x}_i)+\epsilon$, 我们希望构建函数 $f$ 的近似 $\hat{f}$, 使得对于一个新输入数据 $\boldsymbol{x}$, 我们可以预测 $\hat{y} = \hat{f}(\boldsymbol{X})$.</p>
+<p><strong>损失函数：</strong> 衡量 $Y$ 和 $\hat{f}(\boldsymbol{x})$ 的差异程度。在线性回归中使用均方误差 $L(Y,\hat{f}(X)) = (Y-\hat{f}(\boldsymbol{X}))^2$.</p>
+<p><strong>风险函数：</strong> 损失函数在整个分布上的期望 $R(\hat{f}) = E_{D}(Y-\hat{f}(\boldsymbol{X}))^2$. 我们的优化目标是逼近最优预测函数：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f^{*} &= \arg\min_{\hat{f}}R(\hat{f}) \notag \\
+&= \arg\min_{\hat{f}}E_{D}(Y-\hat{f}(\boldsymbol{X}))^2 \notag \\
+&= E(Y|\boldsymbol{X}) = f \tag{1}
+\end{align}</script><h2 id="经验风险最小化"><a href="#经验风险最小化" class="headerlink" title="经验风险最小化"></a>经验风险最小化</h2><p>因为分布 $D$ 是未知的，因此无法直接求得 $R(\hat{f})$. 但是，训练数据 $(\boldsymbol{x_1},y_1),\dots,(\boldsymbol{x}_n,y_n)$ 是从 $D$ 中独立同分布地取出的。因此可以用训练数据上的均值替代分布 $D$ 上的期望：</p>
+<script type="math/tex; mode=display">
+R_{emp}(\hat{f}) = \frac{1}{n}\sum_{i=1}^{n} L\left(y_i,\hat{f}(\boldsymbol{x}_i)\right) \tag{2}</script><p>从而最小均方误差目标变为：</p>
+<script type="math/tex; mode=display">
+\min_{\hat{f}}\sum_{i=1}^{n}\left(y_i-\hat{f}(\boldsymbol{x}_i)\right)^2 \tag{3}</script><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p>设 $f$ 是未知的真实函数，对其施加限制，假定：</p>
+<script type="math/tex; mode=display">
+f(\boldsymbol{x}) = \beta_{0} + \beta_{1}x_{1} + \dots + \beta_{p}x_{p} \tag{4}</script><p>其中 $\beta_i$ 是未知参数, $\beta_0$ 为截距。</p>
+<h2 id="最小二乘回归"><a href="#最小二乘回归" class="headerlink" title="最小二乘回归"></a>最小二乘回归</h2><p>对 $f$ 的估计被简化为对 $\boldsymbol{\beta}$ 的估计。最小二乘回归的任务是估计：</p>
+<script type="math/tex; mode=display">
+\arg\min_{\boldsymbol{\beta}}\sum_{i=1}^{n}(y_{i}-f(\boldsymbol{x}_i))^2 = \arg\min_{\boldsymbol{\beta}}(\boldsymbol{y}-X\boldsymbol{\beta})^{T}(\boldsymbol{y}-X\boldsymbol{\beta}) \tag{5}</script><p>其中 $\boldsymbol{y}$ 为 $n$ 维的因变量向量, $X$ 为 $n\times (p+1)$ 的自变量矩阵, $\boldsymbol{\beta}$ 为 $p+1$ 维的参数向量。</p>
+<h2 id="估计-boldsymbol-beta"><a href="#估计-boldsymbol-beta" class="headerlink" title="估计 $\boldsymbol{\beta}$"></a>估计 $\boldsymbol{\beta}$</h2><p>求解 $\boldsymbol{\beta}$ 的闭式解。记：</p>
+<script type="math/tex; mode=display">
+L = \boldsymbol{y}^{T}\boldsymbol{y} - 2\boldsymbol{y}^{T}X\boldsymbol{\beta} + \boldsymbol{\beta}^{T}X^{T}X\boldsymbol{\beta} \tag{6}</script><p>将 $L$ 对 $\boldsymbol{\beta}$ 求导并等于 0:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L}{\partial \boldsymbol{\beta}} = -2X^{T}\boldsymbol{y} + 2X^{T}X\hat{\boldsymbol{\beta}} &= 0 \notag \\
+\left(X^{T}X\right)\hat{\boldsymbol{\beta}} &= X^{T}\boldsymbol{y} \notag \\
+\hat{\boldsymbol{\beta}} &= \left(X^{T}X\right)^{-1}X^{T}\boldsymbol{y} \tag{7}
+\end{align}</script><p>闭式解成立的条件为 $X^{T}X$ 满秩。</p>
+<h2 id="Hat-矩阵"><a href="#Hat-矩阵" class="headerlink" title="Hat 矩阵"></a>Hat 矩阵</h2><p>记：</p>
+<script type="math/tex; mode=display">
+\hat{y} = X\hat{\beta} = X\left(X^{T}X\right)^{-1}X^{T}y = Hy \tag{8}</script><p>其中 $H = X\left(X^{T}X\right)^{-1}X^{T}$ 记作 Hat 矩阵，其为正交投影矩阵。</p>
+<h2 id="投影矩阵"><a href="#投影矩阵" class="headerlink" title="投影矩阵"></a>投影矩阵</h2><p>投影矩阵 $P$ 是任意满足条件 $P^2 = P$ 的方阵。直观意义是，原始空间中任意向量左乘 $P$ 时会被投影到一个子空间，即变为子空间中最接近原向量的向量。任意向量被投影多次的效果和投影一次的效果一致。</p>
+<p>正交投影矩阵表示，任意原始空间中的向量被投影到子空间都是“垂直”投影的。例如 $\mathbb{R}^3$ 投影到其中的一个 $\mathbb{R}^2$ 就是正交投影，但是投影到一个有限平面就不是正交投影。正交投影矩阵是满足 $P=P^{T}$ 的正交矩阵。</p>
+<p>这是因为取原始空间中任意向量 $y$ 和子空间中任意向量 $z$, 令 $r = y-Py$. 则：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+r^{T}z &= (y-Py)^{T}z \notag \\ 
+&= y^{T}z-y^{T}P^{T}z \notag \\
+&= y^{T}z-y^{T}(Pz) \notag \\
+&= y^{T}z-y^{T}z = 0 \tag{9}
+\end{align}</script><p>即原向量和投影向量的“残差”和子空间是垂直的。（这证明了充分条件）</p>
+<p>顺带一提，正交投影矩阵不一定是正交矩阵。正交矩阵是满足 $Q^{T} = Q^{-1}$ 的矩阵，其列向量、行向量均为一组标准正交基。满足保长度 ($|Qx|^2 = (Qx)^{T}(QX) = x^{T}(Q^{T}Q)x = x^{T}x = |x|^2$) 和保角度 ($(Qx)^{T}(Qy) = x^{T}(Q^{T}Q)y = x^{T}y$). 满足条件的矩阵为旋转变换以及反射变换。</p>
+<p>构造正交投影矩阵有几种方式：</p>
+<ul>
+<li>如果 $u\in\mathbb{R}^n$ 并且 $|u|=1$, 那么 $P=uu^{T}$ 是投影到 $u$ 张成的一维子空间的正交投影矩阵。</li>
+<li>如果 $U$ 的列向量是一组单位正交基 ($U^{T}U=I$), 那么 $UU^{T}$ 是投影到这组正交基张成的子空间的正交投影矩阵。</li>
+<li>对于任意的 $n\times p$ 的满秩矩阵 $X$, $P=X(X^{T}X)^{-1}X^{T}$ 是投影到 $X$ 的列向量的正交投影矩阵。</li>
+</ul>
+<p>因此显然, Hat 矩阵 $H = X\left(X^{T}X\right)^{-1}X^{T}$ 是一个正交投影矩阵. $\hat{y} = Hy$ 是 $y$ 投影到 $X$ 的列空间的向量（注意 $X$ 的一行表示一个输入向量）。下图为示意图。<br><img src="1.png" alt="示意图"></p>
+<h2 id="hat-beta-的性质"><a href="#hat-beta-的性质" class="headerlink" title="$\hat{\beta}$ 的性质"></a>$\hat{\beta}$ 的性质</h2><p>我们通常假设 $\epsilon$ 也是独立同分布的，且 $E(\epsilon)_i = 0$, $\text{Var}(\epsilon_i) = \sigma^2$. 那么：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+E(\hat{\beta}) &= E\left(\left(X^{T}X\right)^{-1}X^{T}y\right) \notag \\
+&= E\left(\left(X^{T}X\right)^{-1}X^{T}(X\beta +\epsilon)\right) \notag \\
+&= E\left(\left(X^{T}X\right)^{-1}X^{T}X\beta\right) + E\left(\left(X^{T}X\right)^{-1}X^{T}\epsilon\right) \notag \\
+&= E(\beta) + E\left(\left(X^{T}X\right)^{-1}X^{T}\right)\cdot E(\epsilon) = \beta \tag{10}
+\end{align}</script><script type="math/tex; mode=display">
+\begin{align}
+\text{Cov}(\hat{\beta})  &= \text{Cov}\left(\left(X^{T}X\right)^{-1}X^{T}y\right) \notag \\
+&= \text{Cov}\left(\beta\right) + \text{Cov}\left(\left(X^{T}X\right)^{-1}X^{T}\epsilon\right) \notag \\
+&= \left(X^{T}X\right)^{-1}X^{T}\text{Cov}(\epsilon)\left(\left(X^{T}X\right)^{-1}X^{T}\right)^{T} \notag \\
+&= \sigma^{2}\left(X^{T}X\right)^{-1}X^{T}X\left(X^{T}X\right)^{-1} \notag \\
+&= \left(X^{T}X\right)^{-1}\sigma^2 \tag{11}
+\end{align}</script><p>其中第 3 个等号是因为，如果 $A$ 为常数矩阵，那么 $\text{Cov}(AX) = A\text{Cov}(X)A^{T}$, 第 4 个等号是因为 $X^{T}X$ 是对称矩阵，对称矩阵的逆还是对称矩阵。公式表明，样本量越大，或不同样本之间相关性越小，则 $\hat{\beta}$ 协方差越小。此外，已知 $\hat{y} = Hy$, 定义残差 $e = y-\hat{y} = (I-H)y$, 定义残差平方和：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+RSS &= e^{T}e \notag \\
+&= ((I-H)y)^{T}(I-H)y \notag \\
+&= ((I-H)(X\beta+\epsilon))^{T}(I-H)(X\beta+\epsilon) \notag \\
+&= ((X-HX)\beta+(I-H)\epsilon)^{T}((X-HX)\beta+(I-H)\epsilon) \notag \\
+&= \epsilon^{T}(I-H)^{T}(I-H)\epsilon \notag \\
+&= \epsilon^{T}(I-H)\epsilon \tag{12}
+\end{align}</script><p>其中第四个等号是因为 $HX=X$, 第六个等号是因为 $H$ 是正交投影矩阵，从而 $I-H$ 也是正交投影矩阵，从而 $(I-H)^{T}(I-H) = (I-H)^{2} = I-H$. 由于对于任意对称矩阵 $A$ 有 $E(\epsilon^{T} A\epsilon) = \sigma^{2}\text{tr}(A)$, 因此 $E(RSS) = \sigma^{2}\text{tr}(I-H)$. 由于 $P$ 是投影到 $X$ 的列空间的正交投影矩阵，而正交投影矩阵的秩等于对应空间维度 ($p+1$)，因此在 $X$ 列满秩时有 $E(RSS) = (N-p-1)\sigma^2$. 从而一个无偏估计为：</p>
+<script type="math/tex; mode=display">
+\hat{\sigma}^2 = \frac{RSS}{N-p-1} \tag{13}</script><p>满足 $E(\hat{\sigma})^2 = \sigma^2$.</p>
+<p>有如下几个典型平方和：</p>
+<ul>
+<li>$SS_{tot} = \sum_{i=1}^{n}(y_i-\bar{y})^2$</li>
+<li>$SS_{reg} = \sum_{i=1}^{n}(\hat{y}_i-\bar{y})^2$</li>
+<li>$SS_{res} = \sum_{i=1}^{n}(y_i-\hat{y}_i)^2 = SS_{tot}-SS_{reg}$</li>
+<li>$R^2 = 1 - \frac{SS_{res}}{SS_{tot}} = \frac{SS_{reg}}{SS_{tot}}$</li>
+</ul>
+<p>$R^2$ 是衡量模型拟合好坏的指标，在最小二乘法（即 $\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i$）中, $R^2\in[0,1]$, 一般情况下, $R^2\in(-∞,1]$, 因为这时$SS_{reg}\ne SS_{tot}-SS_{reg}$. 最小二乘法中，该等式成立是由于 $P$ 是正交投影矩阵，从而 $\hat{y}_{i}^{T}((I-P)y_{i})=\boldsymbol{0}$, 从而 $\sum_{i=1}^{n}(y_i-\hat{y}_i)\hat{y}_i = 0$. 另外，由于 $X$ 的列空间包括截距项，即全 1 向量，因此 $\bar{y} = \bar{y}\cdot \boldsymbol{1}$ ($\bar{y}$ 为常数). 因此 $\sum_{i=1}^{n}(y_i-\hat{y}_i)(\hat{y}_i-\bar{y})=0$. 易证上面等式。</p>
+<p>令 $R_{j}^{2}$ 是如下线性回归得到的 $R^2$ (将所有自变量的一个维度对所有其他维度线性回归):</p>
+<script type="math/tex; mode=display">
+X_j = \alpha_0 + \sum_{k\ne j} \alpha_{k}x_{k} + \epsilon \tag{14}</script><p>令 $S_{x_j}^{2} = \frac{1}{n-1}\sum_{i=1}^{n}(x_{ij}-\bar{x}_{j})^2$. 则有：</p>
+<script type="math/tex; mode=display">
+\text{Var}(\hat{\beta}_j) = \frac{\sigma^2}{(n-1)S_{x_j}^2}\cdot\frac{1}{1-R_{j}^{2}} \tag{15}</script><p>其中 $\frac{1}{1-R_{j}^2}$成为方差放缩因子 (variance inflation factor)。我们希望 $\hat{\beta}$ 方差尽量小。方差公式的前一项的分子衡量噪声方差，分母和“量纲”有关，并不关心；而方差放缩因子衡量自变量不同维度的线性相关程度。</p>
+<h2 id="Gauss-Markov-定理"><a href="#Gauss-Markov-定理" class="headerlink" title="Gauss-Markov 定理"></a>Gauss-Markov 定理</h2><p>定理内容为，假定 $y=X\beta+\epsilon$, 其中 $E(\epsilon)=0$, $\text{Cov}(\epsilon)=\sigma^2I$. 那么如果 $\hat{\beta}$ 是 $\beta$ 的朴素最小二乘估计 (OLS), $\beta^{<em>}$ 是 $\beta$ 的任意其他线性无偏估计（即 $\beta^{</em>}=By$ 且 $E(\beta^*)=\beta$），那么有对于任意 $c\in\mathbb{R}^{p+1}$,</p>
+<script type="math/tex; mode=display">
+\text{Var}(c^{T}\hat{\beta})\leq\text{Var}(c^{T}\beta^{*}) \tag{16}</script><p>因此 $\hat{\beta}$ 被称为最优线性无偏估计器 (Best Linear Unbiased Estimator, BLUE). 如果带入 $c$ 为任意 one-hot 向量，可以知道 $\hat{\beta}$ 的任意一维方差都是最小的；如果要预测新点 $x^{<em>}=(x_{1}^{</em>},\dots,x_{p}^{<em>})^{T}$, 则可以令 $c = (1,x_1^</em>,\dots,x_p^<em>)$, 那么这个点上 $\hat{y}^</em> = c^{T}\hat{\beta}$ 方差最小。（方差来源是数据 $y$ 中的 $\epsilon$.）</p>
+<p>如果线性模型是正确的，那么最小二乘预测是无偏的，并且拥有所有 $y$ 的线性无偏估计器中最小的方差；但是有可能存在有偏的，方差更小的估计器，</p>
+<h2 id="预测准确率"><a href="#预测准确率" class="headerlink" title="预测准确率"></a>预测准确率</h2><p>考虑 $\hat{f}(x^<em>)$ 为 $E(Y|x^</em>)$ 的一个估价，那么均方误差 (MSE) 定义为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+MSE\left(\hat{f}(x^*)\right) &= E\left(\left(f(x^*) - \hat{f}(x^*)\right)^2\right) \notag \\
+&= \left(f(x^*)-E\left(\hat{f}(x^*)\right)\right)^2 + Var(\hat{f}(x^*)) \notag \\
+&= Bias^2 + Variance \tag{17}
+\end{align}</script><p>其中第二个等号可以将第一行的平方项分解为 $(f(x^<em>) - E(\hat{f}(x^</em>))) + (E(\hat{f}(x^<em>)) - \hat{f}(x^</em>))$ 推出。</p>
+<p>一般来说选择估计器需要在方差、偏差之间 trade-off. 增加正则项会导致方差减小，如果对应偏差增加不大的话，就是值得的。（但可能有偏。）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://shenlayu.github.io">shenyu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://shenlayu.github.io/2025/09/19/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-1/">http://shenlayu.github.io/2025/09/19/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a><a class="post-meta__tags" href="/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/">统计学习导论</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/09/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-2/" title="论文笔记：Budgeted Online Continual Learning by Adaptive Layer Freezing and Frequency-based Sampling"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">论文笔记：Budgeted Online Continual Learning by Adaptive Layer Freezing and Frequency-based Sampling</div></div><div class="info-2"><div class="info-item-1"> 标题：Budgeted Online Continual Learning by Adaptive Layer Freezing and Frequency-based Sampling期刊：International Conference on Learning Representations (ICLR spotlight)发表时间：2025链接：https://arxiv.org/pdf/2410.15143  概述本文关注的领域是线上持续学习 (online continual learning), 尤其是分类任务上的高效微调策略。现有的 CL 方法中一类常用策略是维护一个 replay memory, 并在线上学习过程中从中采样加入训练样本。出于模拟线上持续学习资源受限场景以及公平性的考虑，现有方法往往都对新样本采用一个 epoch 训练，并且会比较 replay memory 的内存。但是本文指出，尽管都是一个 epoch; 但是不同方法在 epoch 内的计算量相差很大；即使都比较 replay memory 的内存，但没比较各方法使用的额外模型或 logits ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/09/01/PRML-1/" title="PRML-1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-01</div><div class="info-item-2">PRML-1</div></div><div class="info-2"><div class="info-item-1">1. 绪论1.2 概率论概率的加法公式  p(X) = \sum_{Y} (X,Y)概率的乘法公式  p(X,Y) = p(Y|X)p(X)贝叶斯公式  p(Y|X) = \frac{p(X|Y)p(Y)}{p(X)} = \frac{p(X|Y)p(Y)}{\sum_{Y} p(X|Y)p(Y)}1.2.1 概率密度考虑 $x = g(y)$, 那么 $p_{x}(x)\delta x ≃ p_{y}(y)\delta y$. 从而有：  p_{y}(y) = p_{x}(x)|\frac{dy}{dx}| = p_{x}(g(y))|g^{\prime}(y)|这里 $p_{x}, p_{y}$ 可以理解为针对随机变量 $x,y$ 的概率密度函数。 连续形式的加法公式  p(x) = \int p(x,y) dy连续形式的乘法公式  p(x,y) = p(y|x)p(x)1.2.2 期望和协方差离散和连续形式期望分别定义为：  \mathbb{E}[f] = \sum_{x}p(x)f(x) \mathbb{E}[f] = \int p(x)f(x)dx两种形式下，期望都可以...</div></div></div></a><a class="pagination-related" href="/2025/09/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-1/" title="论文笔记：Evaluating the Visualization of What a Deep Neural Network Has Learned"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-01</div><div class="info-item-2">论文笔记：Evaluating the Visualization of What a Deep Neural Network Has Learned</div></div><div class="info-2"><div class="info-item-1"> 标题：Evaluating the Visualization of What a Deep Neural Network Has Learned期刊：IEEE Transactions on Neural Networks and Learning Systems (TNNLS)发表时间：2016链接：https://arxiv.org/pdf/1509.06321  在 CNN 时代，虽然 CNN 在图像分类问题上已经达到了相当好的效果，但一个问题困扰着大家，即我们不再像往常一样使用提取的特征，而是将一切判断依据都交给神经网络，这样是否太不具备可解释性了呢，我们能否获得模型作出这一判断的依据呢？ 针对这一问题，一篇传奇文章 Visualizing and Understanding Convolutional Networks 给出了解决方案，不久后 Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps 和 On Pixel-Wise Exp...</div></div></div></a><a class="pagination-related" href="/2025/09/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-2/" title="论文笔记：Budgeted Online Continual Learning by Adaptive Layer Freezing and Frequency-based Sampling"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-16</div><div class="info-item-2">论文笔记：Budgeted Online Continual Learning by Adaptive Layer Freezing and Frequency-based Sampling</div></div><div class="info-2"><div class="info-item-1"> 标题：Budgeted Online Continual Learning by Adaptive Layer Freezing and Frequency-based Sampling期刊：International Conference on Learning Representations (ICLR spotlight)发表时间：2025链接：https://arxiv.org/pdf/2410.15143  概述本文关注的领域是线上持续学习 (online continual learning), 尤其是分类任务上的高效微调策略。现有的 CL 方法中一类常用策略是维护一个 replay memory, 并在线上学习过程中从中采样加入训练样本。出于模拟线上持续学习资源受限场景以及公平性的考虑，现有方法往往都对新样本采用一个 epoch 训练，并且会比较 replay memory 的内存。但是本文指出，尽管都是一个 epoch; 但是不同方法在 epoch 内的计算量相差很大；即使都比较 replay memory 的内存，但没比较各方法使用的额外模型或 logits ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">shenyu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shenlayu"><i class="fab fa-github"></i><span>My Github</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome to my blog!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%B4%E7%B4%A0%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">朴素最小二乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">问题定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%8F%E9%AA%8C%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">经验风险最小化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toc-number">1.3.</span> <span class="toc-text">线性回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E5%9B%9E%E5%BD%92"><span class="toc-number">1.4.</span> <span class="toc-text">最小二乘回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%B0%E8%AE%A1-boldsymbol-beta"><span class="toc-number">1.5.</span> <span class="toc-text">估计 $\boldsymbol{\beta}$</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hat-%E7%9F%A9%E9%98%B5"><span class="toc-number">1.6.</span> <span class="toc-text">Hat 矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5"><span class="toc-number">1.7.</span> <span class="toc-text">投影矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hat-beta-%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">1.8.</span> <span class="toc-text">$\hat{\beta}$ 的性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gauss-Markov-%E5%AE%9A%E7%90%86"><span class="toc-number">1.9.</span> <span class="toc-text">Gauss-Markov 定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E5%87%86%E7%A1%AE%E7%8E%87"><span class="toc-number">1.10.</span> <span class="toc-text">预测准确率</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/19/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-1/" title="统计学习导论笔记-1">统计学习导论笔记-1</a><time datetime="2025-09-19T10:37:54.000Z" title="Created 2025-09-19 18:37:54">2025-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-2/" title="论文笔记：Budgeted Online Continual Learning by Adaptive Layer Freezing and Frequency-based Sampling">论文笔记：Budgeted Online Continual Learning by Adaptive Layer Freezing and Frequency-based Sampling</a><time datetime="2025-09-16T11:29:38.000Z" title="Created 2025-09-16 19:29:38">2025-09-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-1/" title="论文笔记：Evaluating the Visualization of What a Deep Neural Network Has Learned">论文笔记：Evaluating the Visualization of What a Deep Neural Network Has Learned</a><time datetime="2025-09-01T08:30:09.000Z" title="Created 2025-09-01 16:30:09">2025-09-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/01/PRML-1/" title="PRML-1">PRML-1</a><time datetime="2025-08-31T16:33:35.000Z" title="Created 2025-09-01 00:33:35">2025-09-01</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By shenyu</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'all',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
